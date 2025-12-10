@@ -51,9 +51,9 @@ class Client extends BaseClient
             headers: [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'User-Agent' => sprintf('apologist/PHP %s', '0.0.1'),
+                'User-Agent' => sprintf('apologist/PHP %s', '0.0.2'),
                 'X-Stainless-Lang' => 'php',
-                'X-Stainless-Package-Version' => '0.0.1',
+                'X-Stainless-Package-Version' => '0.0.2',
                 'X-Stainless-Arch' => Util::machtype(),
                 'X-Stainless-OS' => Util::ostype(),
                 'X-Stainless-Runtime' => php_sapi_name(),
