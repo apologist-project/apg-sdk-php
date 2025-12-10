@@ -1,0 +1,77 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Apologist;
+
+use Apologist\Core\BaseClient;
+use Apologist\Core\Util;
+use Apologist\Services\PetService;
+use Apologist\Services\StoreService;
+use Apologist\Services\UserService;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
+
+class Client extends BaseClient
+{
+    public string $apiKey;
+
+    /**
+     * @api
+     */
+    public PetService $pet;
+
+    /**
+     * @api
+     */
+    public StoreService $store;
+
+    /**
+     * @api
+     */
+    public UserService $user;
+
+    public function __construct(?string $apiKey = null, ?string $baseUrl = null)
+    {
+        $this->apiKey = (string) ($apiKey ?? getenv('APOLOGIST_API_KEY'));
+
+        $baseUrl ??= getenv(
+            'APOLOGIST_BASE_URL'
+        ) ?: 'https://petstore3.swagger.io/api/v3';
+
+        $options = RequestOptions::with(
+            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+            transporter: Psr18ClientDiscovery::find(),
+        );
+
+        parent::__construct(
+            // x-release-please-start-version
+            headers: [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'User-Agent' => sprintf('apologist/PHP %s', '0.0.1'),
+                'X-Stainless-Lang' => 'php',
+                'X-Stainless-Package-Version' => '0.0.1',
+                'X-Stainless-Arch' => Util::machtype(),
+                'X-Stainless-OS' => Util::ostype(),
+                'X-Stainless-Runtime' => php_sapi_name(),
+                'X-Stainless-Runtime-Version' => phpversion(),
+            ],
+            // x-release-please-end
+            baseUrl: $baseUrl,
+            options: $options,
+        );
+
+        $this->pet = new PetService($this);
+        $this->store = new StoreService($this);
+        $this->user = new UserService($this);
+    }
+
+    /** @return array<string,string> */
+    protected function authHeaders(): array
+    {
+        return $this->apiKey ? ['api_key' => $this->apiKey] : [];
+    }
+}
