@@ -272,7 +272,7 @@ final class PetRawService implements PetRawContract
         return $this->client->request(
             method: 'post',
             path: ['pet/%1$s/uploadImage', $petID],
-            query: array_diff_key($parsed, ['body']),
+            query: array_diff_key($parsed, array_flip(['body'])),
             headers: ['Content-Type' => 'application/octet-stream'],
             body: $parsed,
             options: $options,
