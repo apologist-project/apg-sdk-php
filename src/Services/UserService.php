@@ -6,6 +6,7 @@ namespace Apologist\Services;
 
 use Apologist\Client;
 use Apologist\Core\Exceptions\APIException;
+use Apologist\Core\Util;
 use Apologist\RequestOptions;
 use Apologist\ServiceContracts\UserContract;
 use Apologist\User\User;
@@ -45,18 +46,18 @@ final class UserService implements UserContract
         ?int $userStatus = null,
         ?RequestOptions $requestOptions = null,
     ): User {
-        $params = [
-            'id' => $id,
-            'email' => $email,
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'password' => $password,
-            'phone' => $phone,
-            'username' => $username,
-            'userStatus' => $userStatus,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'id' => $id,
+                'email' => $email,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'password' => $password,
+                'phone' => $phone,
+                'username' => $username,
+                'userStatus' => $userStatus,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -105,18 +106,18 @@ final class UserService implements UserContract
         ?int $userStatus = null,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $params = [
-            'id' => $id,
-            'email' => $email,
-            'firstName' => $firstName,
-            'lastName' => $lastName,
-            'password' => $password,
-            'phone' => $phone,
-            'username' => $username,
-            'userStatus' => $userStatus,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'id' => $id,
+                'email' => $email,
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'password' => $password,
+                'phone' => $phone,
+                'username' => $username,
+                'userStatus' => $userStatus,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($existingUsername, params: $params, requestOptions: $requestOptions);
@@ -165,9 +166,7 @@ final class UserService implements UserContract
         ?array $body = null,
         ?RequestOptions $requestOptions = null
     ): User {
-        $params = ['body' => $body];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['body' => $body]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createWithList(params: $params, requestOptions: $requestOptions);
@@ -190,9 +189,9 @@ final class UserService implements UserContract
         ?string $username = null,
         ?RequestOptions $requestOptions = null,
     ): string {
-        $params = ['password' => $password, 'username' => $username];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['password' => $password, 'username' => $username]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->login(params: $params, requestOptions: $requestOptions);

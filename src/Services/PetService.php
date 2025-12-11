@@ -6,6 +6,7 @@ namespace Apologist\Services;
 
 use Apologist\Client;
 use Apologist\Core\Exceptions\APIException;
+use Apologist\Core\Util;
 use Apologist\Pet\Pet;
 use Apologist\Pet\PetCreateParams\Status;
 use Apologist\Pet\PetUploadImageResponse;
@@ -48,16 +49,16 @@ final class PetService implements PetContract
         ?array $tags = null,
         ?RequestOptions $requestOptions = null,
     ): Pet {
-        $params = [
-            'name' => $name,
-            'photoURLs' => $photoURLs,
-            'id' => $id,
-            'category' => $category,
-            'status' => $status,
-            'tags' => $tags,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'name' => $name,
+                'photoURLs' => $photoURLs,
+                'id' => $id,
+                'category' => $category,
+                'status' => $status,
+                'tags' => $tags,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -105,16 +106,16 @@ final class PetService implements PetContract
         ?array $tags = null,
         ?RequestOptions $requestOptions = null,
     ): Pet {
-        $params = [
-            'name' => $name,
-            'photoURLs' => $photoURLs,
-            'id' => $id,
-            'category' => $category,
-            'status' => $status,
-            'tags' => $tags,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'name' => $name,
+                'photoURLs' => $photoURLs,
+                'id' => $id,
+                'category' => $category,
+                'status' => $status,
+                'tags' => $tags,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update(params: $params, requestOptions: $requestOptions);
@@ -156,9 +157,7 @@ final class PetService implements PetContract
         string|\Apologist\Pet\PetFindByStatusParams\Status $status = 'available',
         ?RequestOptions $requestOptions = null,
     ): array {
-        $params = ['status' => $status];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['status' => $status]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->findByStatus(params: $params, requestOptions: $requestOptions);
@@ -181,9 +180,7 @@ final class PetService implements PetContract
         ?array $tags = null,
         ?RequestOptions $requestOptions = null
     ): array {
-        $params = ['tags' => $tags];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['tags' => $tags]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->findByTags(params: $params, requestOptions: $requestOptions);
@@ -208,9 +205,7 @@ final class PetService implements PetContract
         ?string $status = null,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $params = ['name' => $name, 'status' => $status];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['name' => $name, 'status' => $status]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->updateWithForm($petID, params: $params, requestOptions: $requestOptions);
@@ -235,9 +230,7 @@ final class PetService implements PetContract
         ?string $additionalMetadata = null,
         ?RequestOptions $requestOptions = null,
     ): PetUploadImageResponse {
-        $params = ['additionalMetadata' => $additionalMetadata];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['additionalMetadata' => $additionalMetadata]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->uploadImage($petID, $body, params: $params, requestOptions: $requestOptions);

@@ -6,6 +6,7 @@ namespace Apologist\Services\Store;
 
 use Apologist\Client;
 use Apologist\Core\Exceptions\APIException;
+use Apologist\Core\Util;
 use Apologist\RequestOptions;
 use Apologist\ServiceContracts\Store\OrderContract;
 use Apologist\Store\Order\Order;
@@ -44,16 +45,16 @@ final class OrderService implements OrderContract
         string|Status|null $status = null,
         ?RequestOptions $requestOptions = null,
     ): Order {
-        $params = [
-            'id' => $id,
-            'complete' => $complete,
-            'petID' => $petID,
-            'quantity' => $quantity,
-            'shipDate' => $shipDate,
-            'status' => $status,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'id' => $id,
+                'complete' => $complete,
+                'petID' => $petID,
+                'quantity' => $quantity,
+                'shipDate' => $shipDate,
+                'status' => $status,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
