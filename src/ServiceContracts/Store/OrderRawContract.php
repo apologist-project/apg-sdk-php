@@ -15,7 +15,7 @@ interface OrderRawContract
     /**
      * @api
      *
-     * @param array<mixed>|OrderCreateParams $params
+     * @param array<string,mixed>|OrderCreateParams $params
      *
      * @return BaseResponse<Order>
      *

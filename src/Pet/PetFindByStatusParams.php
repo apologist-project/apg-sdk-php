@@ -16,7 +16,7 @@ use Apologist\Pet\PetFindByStatusParams\Status;
  * @see Apologist\Services\PetService::findByStatus()
  *
  * @phpstan-type PetFindByStatusParamsShape = array{
- *   status?: Status|value-of<Status>
+ *   status?: null|Status|value-of<Status>
  * }
  */
 final class PetFindByStatusParams implements BaseModel

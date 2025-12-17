@@ -15,14 +15,14 @@ use Apologist\Core\Contracts\BaseModel;
  * @see Apologist\Services\UserService::update()
  *
  * @phpstan-type UserUpdateParamsShape = array{
- *   id?: int,
- *   email?: string,
- *   firstName?: string,
- *   lastName?: string,
- *   password?: string,
- *   phone?: string,
- *   username?: string,
- *   userStatus?: int,
+ *   id?: int|null,
+ *   email?: string|null,
+ *   firstName?: string|null,
+ *   lastName?: string|null,
+ *   password?: string|null,
+ *   phone?: string|null,
+ *   username?: string|null,
+ *   userStatus?: int|null,
  * }
  */
 final class UserUpdateParams implements BaseModel

@@ -14,18 +14,9 @@ use Apologist\Core\Contracts\BaseModel;
  *
  * @see Apologist\Services\UserService::createWithList()
  *
- * @phpstan-type UserCreateWithListParamsShape = array{
- *   body?: list<User|array{
- *     id?: int|null,
- *     email?: string|null,
- *     firstName?: string|null,
- *     lastName?: string|null,
- *     password?: string|null,
- *     phone?: string|null,
- *     username?: string|null,
- *     userStatus?: int|null,
- *   }>,
- * }
+ * @phpstan-import-type UserShape from \Apologist\User\User
+ *
+ * @phpstan-type UserCreateWithListParamsShape = array{body?: list<UserShape>|null}
  */
 final class UserCreateWithListParams implements BaseModel
 {
@@ -47,16 +38,7 @@ final class UserCreateWithListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<User|array{
-     *   id?: int|null,
-     *   email?: string|null,
-     *   firstName?: string|null,
-     *   lastName?: string|null,
-     *   password?: string|null,
-     *   phone?: string|null,
-     *   username?: string|null,
-     *   userStatus?: int|null,
-     * }> $body
+     * @param list<UserShape> $body
      */
     public static function with(?array $body = null): self
     {
@@ -68,16 +50,7 @@ final class UserCreateWithListParams implements BaseModel
     }
 
     /**
-     * @param list<User|array{
-     *   id?: int|null,
-     *   email?: string|null,
-     *   firstName?: string|null,
-     *   lastName?: string|null,
-     *   password?: string|null,
-     *   phone?: string|null,
-     *   username?: string|null,
-     *   userStatus?: int|null,
-     * }> $body
+     * @param list<UserShape> $body
      */
     public function withBody(array $body): self
     {

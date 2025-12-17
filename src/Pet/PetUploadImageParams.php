@@ -14,7 +14,9 @@ use Apologist\Core\Contracts\BaseModel;
  *
  * @see Apologist\Services\PetService::uploadImage()
  *
- * @phpstan-type PetUploadImageParamsShape = array{additionalMetadata?: string}
+ * @phpstan-type PetUploadImageParamsShape = array{
+ *   additionalMetadata?: string|null
+ * }
  */
 final class PetUploadImageParams implements BaseModel
 {
