@@ -16,12 +16,12 @@ use Apologist\Store\Order\OrderCreateParams\Status;
  * @see Apologist\Services\Store\OrderService::create()
  *
  * @phpstan-type OrderCreateParamsShape = array{
- *   id?: int,
- *   complete?: bool,
- *   petID?: int,
- *   quantity?: int,
- *   shipDate?: \DateTimeInterface,
- *   status?: Status|value-of<Status>,
+ *   id?: int|null,
+ *   complete?: bool|null,
+ *   petID?: int|null,
+ *   quantity?: int|null,
+ *   shipDate?: \DateTimeInterface|null,
+ *   status?: null|Status|value-of<Status>,
  * }
  */
 final class OrderCreateParams implements BaseModel

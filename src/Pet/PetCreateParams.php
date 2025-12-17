@@ -18,13 +18,16 @@ use Apologist\Pet\PetCreateParams\Tag;
  *
  * @see Apologist\Services\PetService::create()
  *
+ * @phpstan-import-type CategoryShape from \Apologist\Pet\PetCreateParams\Category
+ * @phpstan-import-type TagShape from \Apologist\Pet\PetCreateParams\Tag
+ *
  * @phpstan-type PetCreateParamsShape = array{
  *   name: string,
  *   photoURLs: list<string>,
- *   id?: int,
- *   category?: Category|array{id?: int|null, name?: string|null},
- *   status?: Status|value-of<Status>,
- *   tags?: list<Tag|array{id?: int|null, name?: string|null}>,
+ *   id?: int|null,
+ *   category?: CategoryShape|null,
+ *   status?: null|Status|value-of<Status>,
+ *   tags?: list<TagShape>|null,
  * }
  */
 final class PetCreateParams implements BaseModel
@@ -83,9 +86,9 @@ final class PetCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $photoURLs
-     * @param Category|array{id?: int|null, name?: string|null} $category
+     * @param CategoryShape $category
      * @param Status|value-of<Status> $status
-     * @param list<Tag|array{id?: int|null, name?: string|null}> $tags
+     * @param list<TagShape> $tags
      */
     public static function with(
         string $name,
@@ -136,7 +139,7 @@ final class PetCreateParams implements BaseModel
     }
 
     /**
-     * @param Category|array{id?: int|null, name?: string|null} $category
+     * @param CategoryShape $category
      */
     public function withCategory(Category|array $category): self
     {
@@ -160,7 +163,7 @@ final class PetCreateParams implements BaseModel
     }
 
     /**
-     * @param list<Tag|array{id?: int|null, name?: string|null}> $tags
+     * @param list<TagShape> $tags
      */
     public function withTags(array $tags): self
     {

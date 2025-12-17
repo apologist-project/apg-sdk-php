@@ -15,14 +15,14 @@ use Apologist\Core\Contracts\BaseModel;
  * @see Apologist\Services\UserService::create()
  *
  * @phpstan-type UserCreateParamsShape = array{
- *   id?: int,
- *   email?: string,
- *   firstName?: string,
- *   lastName?: string,
- *   password?: string,
- *   phone?: string,
- *   username?: string,
- *   userStatus?: int,
+ *   id?: int|null,
+ *   email?: string|null,
+ *   firstName?: string|null,
+ *   lastName?: string|null,
+ *   password?: string|null,
+ *   phone?: string|null,
+ *   username?: string|null,
+ *   userStatus?: int|null,
  * }
  */
 final class UserCreateParams implements BaseModel

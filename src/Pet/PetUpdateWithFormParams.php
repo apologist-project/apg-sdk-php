@@ -15,7 +15,7 @@ use Apologist\Core\Contracts\BaseModel;
  * @see Apologist\Services\PetService::updateWithForm()
  *
  * @phpstan-type PetUpdateWithFormParamsShape = array{
- *   name?: string, status?: string
+ *   name?: string|null, status?: string|null
  * }
  */
 final class PetUpdateWithFormParams implements BaseModel

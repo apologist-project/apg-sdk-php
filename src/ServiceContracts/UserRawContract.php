@@ -18,7 +18,7 @@ interface UserRawContract
     /**
      * @api
      *
-     * @param array<mixed>|UserCreateParams $params
+     * @param array<string,mixed>|UserCreateParams $params
      *
      * @return BaseResponse<User>
      *
@@ -47,7 +47,7 @@ interface UserRawContract
      * @api
      *
      * @param string $existingUsername The username that needs to be replaced
-     * @param array<mixed>|UserUpdateParams $params
+     * @param array<string,mixed>|UserUpdateParams $params
      *
      * @return BaseResponse<mixed>
      *
@@ -76,7 +76,7 @@ interface UserRawContract
     /**
      * @api
      *
-     * @param array<mixed>|UserCreateWithListParams $params
+     * @param array<string,mixed>|UserCreateWithListParams $params
      *
      * @return BaseResponse<User>
      *
@@ -90,7 +90,7 @@ interface UserRawContract
     /**
      * @api
      *
-     * @param array<mixed>|UserLoginParams $params
+     * @param array<string,mixed>|UserLoginParams $params
      *
      * @return BaseResponse<string>
      *

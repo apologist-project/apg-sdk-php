@@ -14,7 +14,7 @@ use Apologist\Core\Contracts\BaseModel;
  *
  * @see Apologist\Services\PetService::findByTags()
  *
- * @phpstan-type PetFindByTagsParamsShape = array{tags?: list<string>}
+ * @phpstan-type PetFindByTagsParamsShape = array{tags?: list<string>|null}
  */
 final class PetFindByTagsParams implements BaseModel
 {

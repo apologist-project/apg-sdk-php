@@ -21,7 +21,7 @@ interface PetRawContract
     /**
      * @api
      *
-     * @param array<mixed>|PetCreateParams $params
+     * @param array<string,mixed>|PetCreateParams $params
      *
      * @return BaseResponse<Pet>
      *
@@ -49,7 +49,7 @@ interface PetRawContract
     /**
      * @api
      *
-     * @param array<mixed>|PetUpdateParams $params
+     * @param array<string,mixed>|PetUpdateParams $params
      *
      * @return BaseResponse<Pet>
      *
@@ -77,7 +77,7 @@ interface PetRawContract
     /**
      * @api
      *
-     * @param array<mixed>|PetFindByStatusParams $params
+     * @param array<string,mixed>|PetFindByStatusParams $params
      *
      * @return BaseResponse<list<Pet>>
      *
@@ -91,7 +91,7 @@ interface PetRawContract
     /**
      * @api
      *
-     * @param array<mixed>|PetFindByTagsParams $params
+     * @param array<string,mixed>|PetFindByTagsParams $params
      *
      * @return BaseResponse<list<Pet>>
      *
@@ -106,7 +106,7 @@ interface PetRawContract
      * @api
      *
      * @param int $petID ID of pet that needs to be updated
-     * @param array<mixed>|PetUpdateWithFormParams $params
+     * @param array<string,mixed>|PetUpdateWithFormParams $params
      *
      * @return BaseResponse<mixed>
      *
@@ -123,7 +123,7 @@ interface PetRawContract
      *
      * @param int $petID Path param: ID of pet to update
      * @param string $body Body param:
-     * @param array<mixed>|PetUploadImageParams $params
+     * @param array<string,mixed>|PetUploadImageParams $params
      *
      * @return BaseResponse<PetUploadImageResponse>
      *

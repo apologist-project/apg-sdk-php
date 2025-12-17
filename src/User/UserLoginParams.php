@@ -14,7 +14,9 @@ use Apologist\Core\Contracts\BaseModel;
  *
  * @see Apologist\Services\UserService::login()
  *
- * @phpstan-type UserLoginParamsShape = array{password?: string, username?: string}
+ * @phpstan-type UserLoginParamsShape = array{
+ *   password?: string|null, username?: string|null
+ * }
  */
 final class UserLoginParams implements BaseModel
 {

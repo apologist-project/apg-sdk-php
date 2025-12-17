@@ -16,7 +16,7 @@ use Apologist\Store\Order\Order\Status;
  *   petID?: int|null,
  *   quantity?: int|null,
  *   shipDate?: \DateTimeInterface|null,
- *   status?: value-of<Status>|null,
+ *   status?: null|Status|value-of<Status>,
  * }
  */
 final class Order implements BaseModel
