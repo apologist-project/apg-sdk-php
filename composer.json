@@ -53,4 +53,9 @@
     "lint": "./scripts/lint",
     "test": "./scripts/test"
   }
+    "name": "apologist/sdk",
+    "description": "PHP SDK for the Apologist API.",
+    "require": {
+     
+    }
 }
