@@ -40,7 +40,7 @@ final class PetFindByTagsParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string> $tags
+     * @param list<string>|null $tags
      */
     public static function with(?array $tags = null): self
     {

@@ -25,7 +25,7 @@ use Apologist\Pet\PetUpdateParams\Tag;
  *   name: string,
  *   photoURLs: list<string>,
  *   id?: int|null,
- *   category?: CategoryShape|null,
+ *   category?: null|Category|CategoryShape,
  *   status?: null|Status|value-of<Status>,
  *   tags?: list<TagShape>|null,
  * }
@@ -86,9 +86,9 @@ final class PetUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $photoURLs
-     * @param CategoryShape $category
-     * @param Status|value-of<Status> $status
-     * @param list<TagShape> $tags
+     * @param Category|CategoryShape|null $category
+     * @param Status|value-of<Status>|null $status
+     * @param list<TagShape>|null $tags
      */
     public static function with(
         string $name,
@@ -139,7 +139,7 @@ final class PetUpdateParams implements BaseModel
     }
 
     /**
-     * @param CategoryShape $category
+     * @param Category|CategoryShape $category
      */
     public function withCategory(Category|array $category): self
     {

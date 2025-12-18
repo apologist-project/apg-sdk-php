@@ -38,7 +38,7 @@ final class UserCreateWithListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<UserShape> $body
+     * @param list<UserShape>|null $body
      */
     public static function with(?array $body = null): self
     {

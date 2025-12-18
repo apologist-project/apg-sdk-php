@@ -80,9 +80,9 @@ final class Pet implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $photoURLs
-     * @param CategoryShape $category
-     * @param Status|value-of<Status> $status
-     * @param list<TagShape> $tags
+     * @param Category|CategoryShape|null $category
+     * @param Status|value-of<Status>|null $status
+     * @param list<TagShape>|null $tags
      */
     public static function with(
         string $name,
@@ -133,7 +133,7 @@ final class Pet implements BaseModel
     }
 
     /**
-     * @param CategoryShape $category
+     * @param Category|CategoryShape $category
      */
     public function withCategory(Category|array $category): self
     {
