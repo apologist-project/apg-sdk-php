@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2025-12-19)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/apologist-project/apg-sdk-php/compare/v0.1.0...v0.1.1)
+
+### Chores
+
+* **internal:** codegen related update ([2f53512](https://github.com/apologist-project/apg-sdk-php/commit/2f535128c38d86754acd3f16a21afd6fc4a9a592))
+* **internal:** codegen related update ([884f941](https://github.com/apologist-project/apg-sdk-php/commit/884f941f4bcacead0d0d41a63a8fc80ef49182f2))
+
 ## 0.1.0 (2025-12-18)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/apologist-project/apg-sdk-php/compare/v0.0.1...v0.1.0)
