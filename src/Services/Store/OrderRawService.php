@@ -13,6 +13,9 @@ use Apologist\Store\Order\Order;
 use Apologist\Store\Order\OrderCreateParams;
 use Apologist\Store\Order\OrderCreateParams\Status;
 
+/**
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 final class OrderRawService implements OrderRawContract
 {
     // @phpstan-ignore-next-line
@@ -31,9 +34,10 @@ final class OrderRawService implements OrderRawContract
      *   complete?: bool,
      *   petID?: int,
      *   quantity?: int,
-     *   shipDate?: string|\DateTimeInterface,
-     *   status?: 'placed'|'approved'|'delivered'|Status,
+     *   shipDate?: \DateTimeInterface,
+     *   status?: Status|value-of<Status>,
      * }|OrderCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Order>
      *
@@ -41,7 +45,7 @@ final class OrderRawService implements OrderRawContract
      */
     public function create(
         array|OrderCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = OrderCreateParams::parseRequest(
             $params,
@@ -64,6 +68,7 @@ final class OrderRawService implements OrderRawContract
      * For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
      *
      * @param int $orderID ID of order that needs to be fetched
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Order>
      *
@@ -71,7 +76,7 @@ final class OrderRawService implements OrderRawContract
      */
     public function retrieve(
         int $orderID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -88,6 +93,7 @@ final class OrderRawService implements OrderRawContract
      * For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
      *
      * @param int $orderID ID of the order that needs to be deleted
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -95,7 +101,7 @@ final class OrderRawService implements OrderRawContract
      */
     public function delete(
         int $orderID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

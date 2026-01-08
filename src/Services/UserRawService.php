@@ -15,6 +15,10 @@ use Apologist\User\UserCreateWithListParams;
 use Apologist\User\UserLoginParams;
 use Apologist\User\UserUpdateParams;
 
+/**
+ * @phpstan-import-type UserShape from \Apologist\User\User
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 final class UserRawService implements UserRawContract
 {
     // @phpstan-ignore-next-line
@@ -38,6 +42,7 @@ final class UserRawService implements UserRawContract
      *   username?: string,
      *   userStatus?: int,
      * }|UserCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<User>
      *
@@ -45,7 +50,7 @@ final class UserRawService implements UserRawContract
      */
     public function create(
         array|UserCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = UserCreateParams::parseRequest(
             $params,
@@ -68,6 +73,7 @@ final class UserRawService implements UserRawContract
      * Get user by user name
      *
      * @param string $username The name that needs to be fetched. Use user1 for testing.
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<User>
      *
@@ -75,7 +81,7 @@ final class UserRawService implements UserRawContract
      */
     public function retrieve(
         string $username,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -102,6 +108,7 @@ final class UserRawService implements UserRawContract
      *   username?: string,
      *   userStatus?: int,
      * }|UserUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -110,7 +117,7 @@ final class UserRawService implements UserRawContract
     public function update(
         string $existingUsername,
         array|UserUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = UserUpdateParams::parseRequest(
             $params,
@@ -133,6 +140,7 @@ final class UserRawService implements UserRawContract
      * This can only be done by the logged in user.
      *
      * @param string $username The name that needs to be deleted
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -140,7 +148,7 @@ final class UserRawService implements UserRawContract
      */
     public function delete(
         string $username,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -156,18 +164,8 @@ final class UserRawService implements UserRawContract
      *
      * Creates list of users with given input array
      *
-     * @param array{
-     *   body?: list<array{
-     *     id?: int,
-     *     email?: string,
-     *     firstName?: string,
-     *     lastName?: string,
-     *     password?: string,
-     *     phone?: string,
-     *     username?: string,
-     *     userStatus?: int,
-     *   }|User>,
-     * }|UserCreateWithListParams $params
+     * @param array{body?: list<User|UserShape>}|UserCreateWithListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<User>
      *
@@ -175,7 +173,7 @@ final class UserRawService implements UserRawContract
      */
     public function createWithList(
         array|UserCreateWithListParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = UserCreateWithListParams::parseRequest(
             $params,
@@ -198,6 +196,7 @@ final class UserRawService implements UserRawContract
      * Logs user into the system
      *
      * @param array{password?: string, username?: string}|UserLoginParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<string>
      *
@@ -205,7 +204,7 @@ final class UserRawService implements UserRawContract
      */
     public function login(
         array|UserLoginParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = UserLoginParams::parseRequest(
             $params,
@@ -227,12 +226,15 @@ final class UserRawService implements UserRawContract
      *
      * Logs out current logged in user session
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<mixed>
      *
      * @throws APIException
      */
-    public function logout(?RequestOptions $requestOptions = null): BaseResponse
-    {
+    public function logout(
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',

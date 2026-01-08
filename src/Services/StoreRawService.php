@@ -11,6 +11,9 @@ use Apologist\Core\Exceptions\APIException;
 use Apologist\RequestOptions;
 use Apologist\ServiceContracts\StoreRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 final class StoreRawService implements StoreRawContract
 {
     // @phpstan-ignore-next-line
@@ -24,12 +27,14 @@ final class StoreRawService implements StoreRawContract
      *
      * Returns a map of status codes to quantities
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<array<string,int>>
      *
      * @throws APIException
      */
     public function listInventory(
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

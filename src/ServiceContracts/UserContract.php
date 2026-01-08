@@ -8,12 +8,17 @@ use Apologist\Core\Exceptions\APIException;
 use Apologist\RequestOptions;
 use Apologist\User\User;
 
+/**
+ * @phpstan-import-type UserShape from \Apologist\User\User
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 interface UserContract
 {
     /**
      * @api
      *
      * @param int $userStatus User Status
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -26,19 +31,20 @@ interface UserContract
         ?string $phone = null,
         ?string $username = null,
         ?int $userStatus = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): User;
 
     /**
      * @api
      *
      * @param string $username The name that needs to be fetched. Use user1 for testing.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $username,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): User;
 
     /**
@@ -46,6 +52,7 @@ interface UserContract
      *
      * @param string $existingUsername The username that needs to be replaced
      * @param int $userStatus User Status
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -59,40 +66,33 @@ interface UserContract
         ?string $phone = null,
         ?string $username = null,
         ?int $userStatus = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): mixed;
 
     /**
      * @api
      *
      * @param string $username The name that needs to be deleted
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function delete(
         string $username,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): mixed;
 
     /**
      * @api
      *
-     * @param list<array{
-     *   id?: int,
-     *   email?: string,
-     *   firstName?: string,
-     *   lastName?: string,
-     *   password?: string,
-     *   phone?: string,
-     *   username?: string,
-     *   userStatus?: int,
-     * }|User> $body
+     * @param list<User|UserShape> $body
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function createWithList(
         ?array $body = null,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): User;
 
     /**
@@ -100,19 +100,24 @@ interface UserContract
      *
      * @param string $password The password for login in clear text
      * @param string $username The user name for login
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function login(
         ?string $password = null,
         ?string $username = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): string;
 
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
-    public function logout(?RequestOptions $requestOptions = null): mixed;
+    public function logout(
+        RequestOptions|array|null $requestOptions = null
+    ): mixed;
 }

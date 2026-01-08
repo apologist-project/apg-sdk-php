@@ -22,7 +22,7 @@ use Apologist\Pet\Pet\Tag;
  *   id?: int|null,
  *   category?: null|Category|CategoryShape,
  *   status?: null|Status|value-of<Status>,
- *   tags?: list<TagShape>|null,
+ *   tags?: list<Tag|TagShape>|null,
  * }
  */
 final class Pet implements BaseModel
@@ -82,7 +82,7 @@ final class Pet implements BaseModel
      * @param list<string> $photoURLs
      * @param Category|CategoryShape|null $category
      * @param Status|value-of<Status>|null $status
-     * @param list<TagShape>|null $tags
+     * @param list<Tag|TagShape>|null $tags
      */
     public static function with(
         string $name,
@@ -157,7 +157,7 @@ final class Pet implements BaseModel
     }
 
     /**
-     * @param list<TagShape> $tags
+     * @param list<Tag|TagShape> $tags
      */
     public function withTags(array $tags): self
     {
