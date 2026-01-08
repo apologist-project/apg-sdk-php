@@ -10,6 +10,9 @@ use Apologist\RequestOptions;
 use Apologist\ServiceContracts\StoreContract;
 use Apologist\Services\Store\OrderService;
 
+/**
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 final class StoreService implements StoreContract
 {
     /**
@@ -36,12 +39,15 @@ final class StoreService implements StoreContract
      *
      * Returns a map of status codes to quantities
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return array<string,int>
      *
      * @throws APIException
      */
-    public function listInventory(?RequestOptions $requestOptions = null): array
-    {
+    public function listInventory(
+        RequestOptions|array|null $requestOptions = null
+    ): array {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listInventory(requestOptions: $requestOptions);
 

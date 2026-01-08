@@ -13,8 +13,8 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
 /**
- * @phpstan-import-type NormalizedRequest from \Apologist\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ * @phpstan-import-type NormalizedRequest from \Apologist\Core\BaseClient
  */
 class Client extends BaseClient
 {

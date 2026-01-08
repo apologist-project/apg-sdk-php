@@ -11,6 +11,10 @@ use Apologist\RequestOptions;
 use Apologist\ServiceContracts\UserContract;
 use Apologist\User\User;
 
+/**
+ * @phpstan-import-type UserShape from \Apologist\User\User
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 final class UserService implements UserContract
 {
     /**
@@ -32,6 +36,7 @@ final class UserService implements UserContract
      * This can only be done by the logged in user.
      *
      * @param int $userStatus User Status
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -44,7 +49,7 @@ final class UserService implements UserContract
         ?string $phone = null,
         ?string $username = null,
         ?int $userStatus = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): User {
         $params = Util::removeNulls(
             [
@@ -71,12 +76,13 @@ final class UserService implements UserContract
      * Get user by user name
      *
      * @param string $username The name that needs to be fetched. Use user1 for testing.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $username,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): User {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($username, requestOptions: $requestOptions);
@@ -91,6 +97,7 @@ final class UserService implements UserContract
      *
      * @param string $existingUsername The username that needs to be replaced
      * @param int $userStatus User Status
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -104,7 +111,7 @@ final class UserService implements UserContract
         ?string $phone = null,
         ?string $username = null,
         ?int $userStatus = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): mixed {
         $params = Util::removeNulls(
             [
@@ -131,12 +138,13 @@ final class UserService implements UserContract
      * This can only be done by the logged in user.
      *
      * @param string $username The name that needs to be deleted
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function delete(
         string $username,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($username, requestOptions: $requestOptions);
@@ -149,22 +157,14 @@ final class UserService implements UserContract
      *
      * Creates list of users with given input array
      *
-     * @param list<array{
-     *   id?: int,
-     *   email?: string,
-     *   firstName?: string,
-     *   lastName?: string,
-     *   password?: string,
-     *   phone?: string,
-     *   username?: string,
-     *   userStatus?: int,
-     * }|User> $body
+     * @param list<User|UserShape> $body
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function createWithList(
         ?array $body = null,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): User {
         $params = Util::removeNulls(['body' => $body]);
 
@@ -181,13 +181,14 @@ final class UserService implements UserContract
      *
      * @param string $password The password for login in clear text
      * @param string $username The user name for login
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function login(
         ?string $password = null,
         ?string $username = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): string {
         $params = Util::removeNulls(
             ['password' => $password, 'username' => $username]
@@ -204,10 +205,13 @@ final class UserService implements UserContract
      *
      * Logs out current logged in user session
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
-    public function logout(?RequestOptions $requestOptions = null): mixed
-    {
+    public function logout(
+        RequestOptions|array|null $requestOptions = null
+    ): mixed {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->logout(requestOptions: $requestOptions);
 
