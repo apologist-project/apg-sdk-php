@@ -109,16 +109,13 @@ You can use the `maxRetries` option to configure or disable this:
 <?php
 
 use Apologist\Client;
-use Apologist\RequestOptions;
 
 // Configure the default for all requests:
-$client = new Client(maxRetries: 0);
+$client = new Client(requestOptions: ['maxRetries' => 0]);
 
 // Or, configure per-request:
 $result = $client->pet->update(
-  name: 'doggie',
-  photoURLs: ['string'],
-  requestOptions: RequestOptions::with(maxRetries: 5),
+  name: 'doggie', photoURLs: ['string'], requestOptions: ['maxRetries' => 5]
 );
 ```
 
@@ -135,16 +132,14 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
-use Apologist\RequestOptions;
-
 $pet = $client->pet->update(
   name: 'doggie',
   photoURLs: ['string'],
-  requestOptions: RequestOptions::with(
-    extraQueryParams: ['my_query_parameter' => 'value'],
-    extraBodyParams: ['my_body_parameter' => 'value'],
-    extraHeaders: ['my-header' => 'value'],
-  ),
+  requestOptions: [
+    'extraQueryParams' => ['my_query_parameter' => 'value'],
+    'extraBodyParams' => ['my_body_parameter' => 'value'],
+    'extraHeaders' => ['my-header' => 'value'],
+  ],
 );
 ```
 
