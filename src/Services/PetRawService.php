@@ -10,7 +10,9 @@ use Apologist\Core\Conversion\ListOf;
 use Apologist\Core\Exceptions\APIException;
 use Apologist\Pet\Pet;
 use Apologist\Pet\PetCreateParams;
+use Apologist\Pet\PetCreateParams\Category;
 use Apologist\Pet\PetCreateParams\Status;
+use Apologist\Pet\PetCreateParams\Tag;
 use Apologist\Pet\PetFindByStatusParams;
 use Apologist\Pet\PetFindByTagsParams;
 use Apologist\Pet\PetUpdateParams;
@@ -20,6 +22,13 @@ use Apologist\Pet\PetUploadImageResponse;
 use Apologist\RequestOptions;
 use Apologist\ServiceContracts\PetRawContract;
 
+/**
+ * @phpstan-import-type CategoryShape from \Apologist\Pet\PetCreateParams\Category
+ * @phpstan-import-type TagShape from \Apologist\Pet\PetCreateParams\Tag
+ * @phpstan-import-type CategoryShape from \Apologist\Pet\PetUpdateParams\Category as CategoryShape1
+ * @phpstan-import-type TagShape from \Apologist\Pet\PetUpdateParams\Tag as TagShape1
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 final class PetRawService implements PetRawContract
 {
     // @phpstan-ignore-next-line
@@ -37,10 +46,11 @@ final class PetRawService implements PetRawContract
      *   name: string,
      *   photoURLs: list<string>,
      *   id?: int,
-     *   category?: array{id?: int, name?: string},
-     *   status?: 'available'|'pending'|'sold'|Status,
-     *   tags?: list<array{id?: int, name?: string}>,
+     *   category?: Category|CategoryShape,
+     *   status?: Status|value-of<Status>,
+     *   tags?: list<Tag|TagShape>,
      * }|PetCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Pet>
      *
@@ -48,7 +58,7 @@ final class PetRawService implements PetRawContract
      */
     public function create(
         array|PetCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = PetCreateParams::parseRequest(
             $params,
@@ -71,6 +81,7 @@ final class PetRawService implements PetRawContract
      * Returns a single pet
      *
      * @param int $petID ID of pet to return
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Pet>
      *
@@ -78,7 +89,7 @@ final class PetRawService implements PetRawContract
      */
     public function retrieve(
         int $petID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -98,10 +109,11 @@ final class PetRawService implements PetRawContract
      *   name: string,
      *   photoURLs: list<string>,
      *   id?: int,
-     *   category?: array{id?: int, name?: string},
-     *   status?: 'available'|'pending'|'sold'|PetUpdateParams\Status,
-     *   tags?: list<array{id?: int, name?: string}>,
+     *   category?: PetUpdateParams\Category|CategoryShape1,
+     *   status?: PetUpdateParams\Status|value-of<PetUpdateParams\Status>,
+     *   tags?: list<PetUpdateParams\Tag|TagShape1>,
      * }|PetUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Pet>
      *
@@ -109,7 +121,7 @@ final class PetRawService implements PetRawContract
      */
     public function update(
         array|PetUpdateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = PetUpdateParams::parseRequest(
             $params,
@@ -132,6 +144,7 @@ final class PetRawService implements PetRawContract
      * delete a pet
      *
      * @param int $petID Pet id to delete
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -139,7 +152,7 @@ final class PetRawService implements PetRawContract
      */
     public function delete(
         int $petID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -156,8 +169,9 @@ final class PetRawService implements PetRawContract
      * Multiple status values can be provided with comma separated strings
      *
      * @param array{
-     *   status?: 'available'|'pending'|'sold'|PetFindByStatusParams\Status,
+     *   status?: PetFindByStatusParams\Status|value-of<PetFindByStatusParams\Status>,
      * }|PetFindByStatusParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<list<Pet>>
      *
@@ -165,7 +179,7 @@ final class PetRawService implements PetRawContract
      */
     public function findByStatus(
         array|PetFindByStatusParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = PetFindByStatusParams::parseRequest(
             $params,
@@ -188,6 +202,7 @@ final class PetRawService implements PetRawContract
      * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
      *
      * @param array{tags?: list<string>}|PetFindByTagsParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<list<Pet>>
      *
@@ -195,7 +210,7 @@ final class PetRawService implements PetRawContract
      */
     public function findByTags(
         array|PetFindByTagsParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = PetFindByTagsParams::parseRequest(
             $params,
@@ -219,6 +234,7 @@ final class PetRawService implements PetRawContract
      *
      * @param int $petID ID of pet that needs to be updated
      * @param array{name?: string, status?: string}|PetUpdateWithFormParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -227,7 +243,7 @@ final class PetRawService implements PetRawContract
     public function updateWithForm(
         int $petID,
         array|PetUpdateWithFormParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = PetUpdateWithFormParams::parseRequest(
             $params,
@@ -252,6 +268,7 @@ final class PetRawService implements PetRawContract
      * @param int $petID Path param: ID of pet to update
      * @param string $body Body param:
      * @param array{additionalMetadata?: string}|PetUploadImageParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<PetUploadImageResponse>
      *
@@ -261,7 +278,7 @@ final class PetRawService implements PetRawContract
         int $petID,
         string $body,
         array|PetUploadImageParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = PetUploadImageParams::parseRequest(
             $params,

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Apologist\Core\Contracts;
 
 /**
- * @internal
+ * @phpstan-import-type NormalizedRequest from \Apologist\Core\BaseClient
  *
- * @phpstan-import-type normalized_request from \Apologist\Core\BaseClient
+ * @internal
  *
  * @template Item
  *

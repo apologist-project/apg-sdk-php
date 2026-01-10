@@ -16,7 +16,9 @@ use Apologist\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type UserShape from \Apologist\User\User
  *
- * @phpstan-type UserCreateWithListParamsShape = array{body?: list<UserShape>|null}
+ * @phpstan-type UserCreateWithListParamsShape = array{
+ *   body?: list<User|UserShape>|null
+ * }
  */
 final class UserCreateWithListParams implements BaseModel
 {
@@ -38,7 +40,7 @@ final class UserCreateWithListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<UserShape>|null $body
+     * @param list<User|UserShape>|null $body
      */
     public static function with(?array $body = null): self
     {
@@ -50,7 +52,7 @@ final class UserCreateWithListParams implements BaseModel
     }
 
     /**
-     * @param list<UserShape> $body
+     * @param list<User|UserShape> $body
      */
     public function withBody(array $body): self
     {

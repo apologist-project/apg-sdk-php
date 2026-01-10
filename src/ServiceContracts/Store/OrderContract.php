@@ -9,12 +9,16 @@ use Apologist\RequestOptions;
 use Apologist\Store\Order\Order;
 use Apologist\Store\Order\OrderCreateParams\Status;
 
+/**
+ * @phpstan-import-type RequestOpts from \Apologist\RequestOptions
+ */
 interface OrderContract
 {
     /**
      * @api
      *
-     * @param 'placed'|'approved'|'delivered'|Status $status Order Status
+     * @param Status|value-of<Status> $status Order Status
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -23,32 +27,34 @@ interface OrderContract
         ?bool $complete = null,
         ?int $petID = null,
         ?int $quantity = null,
-        string|\DateTimeInterface|null $shipDate = null,
-        string|Status|null $status = null,
-        ?RequestOptions $requestOptions = null,
+        ?\DateTimeInterface $shipDate = null,
+        Status|string|null $status = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Order;
 
     /**
      * @api
      *
      * @param int $orderID ID of order that needs to be fetched
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         int $orderID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Order;
 
     /**
      * @api
      *
      * @param int $orderID ID of the order that needs to be deleted
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function delete(
         int $orderID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): mixed;
 }
