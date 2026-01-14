@@ -140,7 +140,7 @@ interface PetContract
      * @api
      *
      * @param int $petID Path param: ID of pet to update
-     * @param string $body Body param:
+     * @param string $body Body param
      * @param string $additionalMetadata Query param: Additional Metadata
      * @param RequestOpts|null $requestOptions
      *
