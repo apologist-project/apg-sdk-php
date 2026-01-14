@@ -266,7 +266,7 @@ final class PetRawService implements PetRawContract
      * uploads an image
      *
      * @param int $petID Path param: ID of pet to update
-     * @param string $body Body param:
+     * @param string $body Body param
      * @param array{additionalMetadata?: string}|PetUploadImageParams $params
      * @param RequestOpts|null $requestOptions
      *

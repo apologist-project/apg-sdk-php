@@ -132,7 +132,7 @@ interface PetRawContract
      * @api
      *
      * @param int $petID Path param: ID of pet to update
-     * @param string $body Body param:
+     * @param string $body Body param
      * @param array<string,mixed>|PetUploadImageParams $params
      * @param RequestOpts|null $requestOptions
      *
