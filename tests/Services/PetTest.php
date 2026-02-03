@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use Apologist\Client;
+use Apologist\Core\Util;
 use Apologist\Pet\Pet;
 use Apologist\Pet\PetUploadImageResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -22,7 +23,7 @@ final class PetTest extends TestCase
     {
         parent::setUp();
 
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $testUrl = Util::getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
         $client = new Client(apiKey: 'My API Key', baseUrl: $testUrl);
 
         $this->client = $client;

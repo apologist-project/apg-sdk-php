@@ -43,9 +43,9 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
-        $this->apiKey = (string) ($apiKey ?? getenv('APOLOGIST_API_KEY'));
+        $this->apiKey = (string) ($apiKey ?? Util::getenv('APOLOGIST_API_KEY'));
 
-        $baseUrl ??= getenv(
+        $baseUrl ??= Util::getenv(
             'APOLOGIST_BASE_URL'
         ) ?: 'https://petstore3.swagger.io/api/v3';
 
