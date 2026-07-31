@@ -1,61 +1,46 @@
 {
-  "$schema": "https://getcomposer.org/schema.json",
-  "license": "Apache-2.0",
+  "name": "Apologist",
+  "version": "0.1.1",
+  "description": "ApologistAi PHP Library",
+  "keywords": [
+    "apologist-ai",
+    "api",
+    "sdk"
+  ],
+  "license": [],
+  "require": {
+    "php": "^8.1",
+    "ext-json": "*",
+    "psr/http-client": "^1.0",
+    "psr/http-client-implementation": "^1.0",
+    "psr/http-factory": "^1.0",
+    "psr/http-factory-implementation": "^1.0",
+    "psr/http-message": "^1.1 || ^2.0",
+    "php-http/discovery": "^1.0",
+    "php-http/multipart-stream-builder": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^12.5.22",
+    "friendsofphp/php-cs-fixer": "3.5.0",
+    "phpstan/phpstan": "^1.12",
+    "guzzlehttp/guzzle": "^7.4"
+  },
   "autoload": {
-    "files": [
-      "src/Core.php",
-      "src/Version.php",
-      "src/Client.php"
-    ],
     "psr-4": {
-      "Apologist\\": "src/"
+      "ApologistAi\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "tests/"
+      "ApologistAi\\Tests\\": "tests/"
     }
-  },
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true,
-      "php-http/discovery": false,
-      "phpstan/extension-installer": true
-    },
-    "platform": {
-      "php": "8.3"
-    },
-    "preferred-install": "dist",
-    "sort-packages": true
-  },
-  "description": "Apologist PHP SDK",
-  "name": "org-placeholder/apologist",
-  "require": {
-    "php": "^8.1",
-    "php-http/discovery": "^1",
-    "psr/http-client": "^1",
-    "psr/http-client-implementation": "^1",
-    "psr/http-factory-implementation": "^1",
-    "psr/http-message": "^1|^2"
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3",
-    "nyholm/psr7": "^1",
-    "pestphp/pest": "^3",
-    "phpstan/extension-installer": "^1",
-    "phpstan/phpstan": "^2",
-    "phpstan/phpstan-phpunit": "^2",
-    "phpunit/phpunit": "^11",
-    "symfony/http-client": "^7"
   },
   "scripts": {
-    "build:docs": "curl --etag-save ./vendor/ag.etags --etag-compare ./vendor/ag.etags --create-dirs --remote-name --output-dir ./vendor/bin --no-progress-meter -- https://github.com/ApiGen/ApiGen/releases/latest/download/apigen.phar && php ./vendor/bin/apigen.phar --output docs -- src",
-    "lint": "./scripts/lint",
-    "test": "./scripts/test"
+    "build": [
+      "@php -l src",
+      "@php -l tests"
+    ],
+    "test": "phpunit",
+    "analyze": "phpstan analyze src tests --memory-limit=1G"
   }
-    "name": "apologist/sdk",
-    "description": "PHP SDK for the Apologist API.",
-    "require": {
-     
-    }
 }
