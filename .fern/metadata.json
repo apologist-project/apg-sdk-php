@@ -1,0 +1,12 @@
+{
+  "cliVersion": "5.72.1",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "2.16.0",
+  "generatorConfig": {
+    "packageName": "Apologist"
+  },
+  "originGitCommit": "bed785c05c5bfb53f26bc1e786c4361a189f15b4",
+  "originGitCommitIsDirty": true,
+  "invokedBy": "manual",
+  "sdkVersion": "0.1.1"
+}

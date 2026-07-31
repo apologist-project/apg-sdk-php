@@ -1,125 +1,54 @@
-# Apologist PHP API library
+# ApologistAi PHP Library
 
-> [!NOTE]
-> The Apologist PHP API Library is currently in **beta** and we're excited for you to experiment with it!
->
-> This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
->
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/apologist-project/apg-sdk-php/issues/new).
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fapologist-project%2Fapg-sdk-php)
+[![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/Apologist)
 
-The Apologist PHP library provides convenient access to the Apologist REST API from any PHP 8.1.0+ application.
+The ApologistAi PHP library provides convenient access to the ApologistAi APIs from PHP.
 
-It is generated with [Stainless](https://www.stainless.com/).
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Advanced Concepts](#advanced-concepts)
+- [Versioning](#versioning)
+- [Requirements](#requirements)
+- [Environments](#environments)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Custom Client](#custom-client)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
 
 ## Documentation
 
 ## Installation
 
-To use this package, install via Composer by adding the following to your application's `composer.json`:
-
-<!-- x-release-please-start-version -->
-
-```json
-{
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:apologist-project/apg-sdk-php.git"
-    }
-  ],
-  "require": {
-    "org-placeholder/apologist": "dev-main"
-  }
-}
+```sh
+composer require Apologist
 ```
-
-<!-- x-release-please-end -->
 
 ## Usage
 
-This library uses named parameters to specify optional arguments.
-Parameters with a default value must be set by name.
+Instantiate and use the client with the following:
 
 ```php
 <?php
 
-use Apologist\Client;
+namespace Example;
 
-$client = new Client(apiKey: getenv('APOLOGIST_API_KEY') ?: 'My API Key');
+use ApologistAi\ApologistAiClient;
 
-$pet = $client->pet->update(name: 'doggie', photoURLs: ['string']);
-
-var_dump($pet->id);
-```
-
-### Value Objects
-
-It is recommended to use the static `with` constructor `Dog::with(name: "Joey")`
-and named parameters to initialize value objects.
-
-However, builders are also provided `(new Dog)->withName("Joey")`.
-
-### Handling errors
-
-When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `Apologist\Core\Exceptions\APIException` will be thrown:
-
-```php
-<?php
-
-use Apologist\Core\Exceptions\APIConnectionException;
-
-try {
-  $pet = $client->pet->update(name: 'doggie', photoURLs: ['string']);
-} catch (APIConnectionException $e) {
-  echo "The server could not be reached", PHP_EOL;
-  var_dump($e->getPrevious());
-} catch (RateLimitError $e) {
-  echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
-} catch (APIStatusError $e) {
-  echo "Another non-200-range status code was received", PHP_EOL;
-  echo $e->getMessage();
-}
-```
-
-Error codes are as follows:
-
-| Cause            | Error Type                     |
-| ---------------- | ------------------------------ |
-| HTTP 400         | `BadRequestException`          |
-| HTTP 401         | `AuthenticationException`      |
-| HTTP 403         | `PermissionDeniedException`    |
-| HTTP 404         | `NotFoundException`            |
-| HTTP 409         | `ConflictException`            |
-| HTTP 422         | `UnprocessableEntityException` |
-| HTTP 429         | `RateLimitException`           |
-| HTTP >= 500      | `InternalServerException`      |
-| Other HTTP error | `APIStatusException`           |
-| Timeout          | `APITimeoutException`          |
-| Network error    | `APIConnectionException`       |
-
-### Retries
-
-Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
-
-Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, >=500 Internal errors, and timeouts will all be retried by default.
-
-You can use the `maxRetries` option to configure or disable this:
-
-```php
-<?php
-
-use Apologist\Client;
-use Apologist\RequestOptions;
-
-// Configure the default for all requests:
-$client = new Client(maxRetries: 0);
-
-// Or, configure per-request:
-$result = $client->pet->update(
-  name: 'doggie',
-  photoURLs: ['string'],
-  requestOptions: RequestOptions::with(maxRetries: 5),
+$client = new ApologistAiClient(
+    apiKey: '<value>',
 );
+$client->chat->createChatCompletion(
+    [
+        'key' => "value",
+    ],
+);
+
 ```
 
 ## Advanced concepts
@@ -176,8 +105,126 @@ This package considers improvements to the (non-runtime) PHPDoc type definitions
 
 ## Requirements
 
-PHP 8.1.0 or higher.
+This SDK requires PHP ^8.1.
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```php
+The SDK defaults to the `Default_` environment. To use a different environment, pass it to the client constructor:
+
+```php
+use ApologistAi\ApologistAiClient;
+use ApologistAi\Environments;
+
+$client = new ApologistAiClient(
+    token: '<YOUR_TOKEN>',
+    options: [
+        'baseUrl' => Environments::Staging->value
+    ]
+);
+```
+
+Available environments:
+- `Environments::Default_`
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
+
+```php
+use ApologistAi\Exceptions\ApologistAiApiException;
+use ApologistAi\Exceptions\ApologistAiException;
+
+try {
+    $response = $client->chat->createChatCompletion(...);
+} catch (ApologistAiApiException $e) {
+    echo 'API Exception occurred: ' . $e->getMessage() . "\n";
+    echo 'Status Code: ' . $e->getCode() . "\n";
+    echo 'Response Body: ' . $e->getBody() . "\n";
+    // Optionally, rethrow the exception or handle accordingly.
+}
+```
+
+## Advanced
+
+### Custom Client
+
+This SDK is built to work with any HTTP client that implements the [PSR-18](https://www.php-fig.org/psr/psr-18/) `ClientInterface`.
+By default, if no client is provided, the SDK will use `php-http/discovery` to find an installed HTTP client.
+However, you can pass your own client that adheres to `ClientInterface`:
+
+```php
+use ApologistAi\ApologistAiClient;
+
+// Pass any PSR-18 compatible HTTP client implementation.
+// For example, using Guzzle:
+$customClient = new \GuzzleHttp\Client([
+    'timeout' => 5.0,
+]);
+
+$client = new ApologistAiClient(options: [
+    'client' => $customClient
+]);
+
+// Or using Symfony HttpClient:
+// $customClient = (new \Symfony\Component\HttpClient\Psr18Client())
+//     ->withOptions(['timeout' => 5.0]);
+//
+// $client = new ApologistAiClient(options: [
+//     'client' => $customClient
+// ]);
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (Internal Server Error)
+
+The `retryStatusCodes` configuration controls which [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) status codes are retried:
+
+- `legacy` (default): Retries `408`, `429`, and all `>= 500`
+- `recommended`: Retries `408`, `429`, `502`, `503`, `504` only (excludes `500 Internal Server Error` to avoid retrying non-idempotent failures)
+
+Use the `maxRetries` request option to configure this behavior.
+
+```php
+$response = $client->chat->createChatCompletion(
+    ...,
+    options: [
+        'maxRetries' => 0 // Override maxRetries at the request level
+    ]
+);
+```
+
+### Timeouts
+
+The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
+
+```php
+$response = $client->chat->createChatCompletion(
+    ...,
+    options: [
+        'timeout' => 3.0 // Override timeout at the request level
+    ]
+);
+```
 
 ## Contributing
 
-See [the contributing documentation](https://github.com/apologist-project/apg-sdk-php/tree/main/CONTRIBUTING.md).
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!
