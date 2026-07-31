@@ -4,11 +4,12 @@
   "generatorVersion": "2.16.0",
   "generatorConfig": {
     "packageName": "apologist/apologist",
-    "clientName": "ApologistAgentClient",
+    "clientName": "AgentClient",
     "namespace": "Apologist"
   },
-  "originGitCommit": "48763009ddb15e043da173498c3cc160c5c5dc45",
-  "originGitCommitIsDirty": true,
-  "invokedBy": "manual",
-  "sdkVersion": "0.0.1"
+  "originGitCommit": "260686d6daa2090b871f8509b0b2661bc33c170c",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "ci",
+  "ciProvider": "github",
+  "sdkVersion": "0.0.6"
 }

@@ -1,13 +1,13 @@
 {
   "name": "apologist/apologist",
-  "version": "1.0.3",
+  "version": "0.0.6",
   "description": "Apologist PHP Library",
   "keywords": [
     "apologist-ai",
     "api",
     "sdk"
   ],
-  "license": "MIT",
+  "license": [],
   "require": {
     "php": "^8.1",
     "ext-json": "*",
