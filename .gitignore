@@ -1,5 +1,13 @@
-.idea
+docs/
+.idea/
 .php-cs-fixer.cache
-.phpunit.result.cache
-composer.lock
+.php-cs-fixer.php
+.phpunit.cache
+phpunit.xml
+playground/
+*.swo
+*.swp
 vendor/
+
+# do not edit! excludes generated files used internally
+.artifacts/
