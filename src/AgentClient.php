@@ -13,7 +13,7 @@ use Apologist\Shares\SharesClient;
 use Psr\Http\Client\ClientInterface;
 use Apologist\Core\Client\RawClient;
 
-class ApologistAgentClient
+class AgentClient
 {
     /**
      * @var ChatClient $chat
@@ -90,8 +90,8 @@ class ApologistAgentClient
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Apologist',
-            'X-Fern-SDK-Version' => '0.0.1',
-            'User-Agent' => 'apologist/apologist/0.0.1',
+            'X-Fern-SDK-Version' => '0.0.6',
+            'User-Agent' => 'apologist/apologist/0.0.6',
         ];
         if ($apiKey != null) {
             $defaultHeaders['x-api-key'] = $apiKey;
