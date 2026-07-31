@@ -1,8 +1,8 @@
 <?php
 
-namespace ApologistAi\Evaluators\Requests;
+namespace Apologist\Evaluators\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonSerializableType;
 
 class ListEvaluationsRequest extends JsonSerializableType
 {

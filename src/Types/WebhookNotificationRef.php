@@ -1,9 +1,9 @@
 <?php
 
-namespace ApologistAi\Types;
+namespace Apologist\Types;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
 
 /**
  * The notification configuration that produced this delivery.

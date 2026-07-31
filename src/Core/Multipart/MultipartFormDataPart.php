@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Core\Multipart;
+namespace Apologist\Core\Multipart;
 
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Message\StreamInterface;

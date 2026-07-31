@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Core\Types;
+namespace Apologist\Core\Types;
 
 use Attribute;
 

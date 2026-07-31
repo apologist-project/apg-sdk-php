@@ -1,9 +1,9 @@
 <?php
 
-namespace ApologistAi\Channels\Requests;
+namespace Apologist\Channels\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
 
 class ReceiveTwilioMessageRequest extends JsonSerializableType
 {

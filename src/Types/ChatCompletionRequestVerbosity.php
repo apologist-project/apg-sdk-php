@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Types;
+namespace Apologist\Types;
 
 enum ChatCompletionRequestVerbosity: string
 {

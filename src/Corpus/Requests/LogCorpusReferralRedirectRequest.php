@@ -1,8 +1,8 @@
 <?php
 
-namespace ApologistAi\Corpus\Requests;
+namespace Apologist\Corpus\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonSerializableType;
 
 class LogCorpusReferralRedirectRequest extends JsonSerializableType
 {

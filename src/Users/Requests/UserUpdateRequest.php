@@ -1,11 +1,11 @@
 <?php
 
-namespace ApologistAi\Users\Requests;
+namespace Apologist\Users\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Types\ArrayType;
-use ApologistAi\Core\Types\Union;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Types\ArrayType;
+use Apologist\Core\Types\Union;
 
 class UserUpdateRequest extends JsonSerializableType
 {

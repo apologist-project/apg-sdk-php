@@ -1,23 +1,23 @@
 <?php
 
-namespace ApologistAi\Tests\Core\Client;
+namespace Apologist\Tests\Core\Client;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use ApologistAi\Core\Client\HttpMethod;
-use ApologistAi\Core\Client\HttpClientBuilder;
-use ApologistAi\Core\Client\MockHttpClient;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Core\Client\RetryDecoratingClient;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Core\Json\JsonEncoder;
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Multipart\MultipartApiRequest;
-use ApologistAi\Core\Multipart\MultipartFormData;
-use ApologistAi\Core\Multipart\MultipartFormDataPart;
+use Apologist\Core\Client\HttpMethod;
+use Apologist\Core\Client\HttpClientBuilder;
+use Apologist\Core\Client\MockHttpClient;
+use Apologist\Core\Client\RawClient;
+use Apologist\Core\Client\RetryDecoratingClient;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Core\Json\JsonEncoder;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Multipart\MultipartApiRequest;
+use Apologist\Core\Multipart\MultipartFormData;
+use Apologist\Core\Multipart\MultipartFormDataPart;
 
 class JsonRequest extends JsonSerializableType
 {

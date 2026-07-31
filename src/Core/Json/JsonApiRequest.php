@@ -1,9 +1,9 @@
 <?php
 
-namespace ApologistAi\Core\Json;
+namespace Apologist\Core\Json;
 
-use ApologistAi\Core\Client\BaseApiRequest;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\BaseApiRequest;
+use Apologist\Core\Client\HttpMethod;
 
 class JsonApiRequest extends BaseApiRequest
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Core\Json;
+namespace Apologist\Core\Json;
 
 use JsonException;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi;
+namespace Apologist;
 
 enum Environments: string
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace ApologistAi\Benchmarks\Requests;
+namespace Apologist\Benchmarks\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Types\Union;
-use ApologistAi\Benchmarks\Types\BenchmarkRunRequestReasoningEffort;
-use ApologistAi\Benchmarks\Types\BenchmarkRunRequestVerbosity;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Types\Union;
+use Apologist\Benchmarks\Types\BenchmarkRunRequestReasoningEffort;
+use Apologist\Benchmarks\Types\BenchmarkRunRequestVerbosity;
 
 class BenchmarkRunRequest extends JsonSerializableType
 {

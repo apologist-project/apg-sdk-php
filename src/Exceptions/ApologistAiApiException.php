@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Exceptions;
+namespace Apologist\Exceptions;
 
 use Throwable;
 

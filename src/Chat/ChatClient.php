@@ -1,25 +1,25 @@
 <?php
 
-namespace ApologistAi\Chat;
+namespace Apologist\Chat;
 
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Chat\Requests\ListChatCompletionsRequest;
-use ApologistAi\Chat\Types\ListChatCompletionsResponse;
-use ApologistAi\Exceptions\ApologistAiException;
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Environments;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\RawClient;
+use Apologist\Chat\Requests\ListChatCompletionsRequest;
+use Apologist\Chat\Types\ListChatCompletionsResponse;
+use Apologist\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Environments;
+use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use ApologistAi\Types\ChatCompletionResponse;
-use ApologistAi\Chat\Requests\LikeRequest;
-use ApologistAi\Types\SuccessResponse;
-use ApologistAi\Chat\Requests\FlagRequest;
-use ApologistAi\Chat\Requests\FeedbackRequest;
-use ApologistAi\Chat\Requests\ShareRequest;
-use ApologistAi\Chat\Types\GetChatCompletionResponse;
+use Apologist\Types\ChatCompletionResponse;
+use Apologist\Chat\Requests\LikeRequest;
+use Apologist\Types\SuccessResponse;
+use Apologist\Chat\Requests\FlagRequest;
+use Apologist\Chat\Requests\FeedbackRequest;
+use Apologist\Chat\Requests\ShareRequest;
+use Apologist\Chat\Types\GetChatCompletionResponse;
 
 class ChatClient
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace ApologistAi\Tests\Core\Json;
+namespace Apologist\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
-use ApologistAi\Core\Json\JsonEncoder;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Types\ArrayType;
-use ApologistAi\Core\Types\Union;
+use Apologist\Core\Json\JsonEncoder;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Types\ArrayType;
+use Apologist\Core\Types\Union;
 
 class Scalar extends JsonSerializableType
 {

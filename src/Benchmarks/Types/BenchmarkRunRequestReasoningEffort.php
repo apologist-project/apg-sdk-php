@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Benchmarks\Types;
+namespace Apologist\Benchmarks\Types;
 
 enum BenchmarkRunRequestReasoningEffort: string
 {

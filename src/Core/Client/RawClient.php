@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Core\Client;
+namespace Apologist\Core\Client;
 
 use JsonSerializable;
 use InvalidArgumentException;
@@ -12,9 +12,9 @@ use Psr\Http\Message\ResponseInterface;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Core\Json\JsonEncoder;
-use ApologistAi\Core\Multipart\MultipartApiRequest;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Core\Json\JsonEncoder;
+use Apologist\Core\Multipart\MultipartApiRequest;
 
 class RawClient
 {

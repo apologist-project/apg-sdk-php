@@ -1,11 +1,11 @@
 <?php
 
-namespace ApologistAi\Utils;
+namespace Apologist\Utils;
 
 use Exception;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\StreamInterface;
-use ApologistAi\Core\Multipart\MultipartFormDataPart;
+use Apologist\Core\Multipart\MultipartFormDataPart;
 
 /**
  * File is a utility class used to transfer files as multipart form data.

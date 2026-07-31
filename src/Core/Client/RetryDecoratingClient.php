@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Core\Client;
+namespace Apologist\Core\Client;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;

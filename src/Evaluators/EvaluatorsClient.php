@@ -1,21 +1,21 @@
 <?php
 
-namespace ApologistAi\Evaluators;
+namespace Apologist\Evaluators;
 
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Evaluators\Requests\ListEvaluationsRequest;
-use ApologistAi\Evaluators\Types\ListEvaluationsResponse;
-use ApologistAi\Exceptions\ApologistAiException;
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Environments;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\RawClient;
+use Apologist\Evaluators\Requests\ListEvaluationsRequest;
+use Apologist\Evaluators\Types\ListEvaluationsResponse;
+use Apologist\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Environments;
+use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use ApologistAi\Evaluators\Requests\EvaluatorRequest;
-use ApologistAi\Evaluators\Types\EvaluateContentResponse;
-use ApologistAi\Evaluators\Types\GetEvaluationResponse;
+use Apologist\Evaluators\Requests\EvaluatorRequest;
+use Apologist\Evaluators\Types\EvaluateContentResponse;
+use Apologist\Evaluators\Types\GetEvaluationResponse;
 
 class EvaluatorsClient
 {

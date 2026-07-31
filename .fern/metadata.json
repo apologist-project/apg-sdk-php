@@ -3,7 +3,9 @@
   "generatorName": "fernapi/fern-php-sdk",
   "generatorVersion": "2.16.0",
   "generatorConfig": {
-    "packageName": "Apologist"
+    "packageName": "apologist/apologist",
+    "clientName": "ApologistAgent",
+    "namespace": "Apologist"
   },
   "originGitCommit": "bed785c05c5bfb53f26bc1e786c4361a189f15b4",
   "originGitCommitIsDirty": true,

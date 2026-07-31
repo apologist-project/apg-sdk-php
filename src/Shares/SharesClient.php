@@ -1,15 +1,15 @@
 <?php
 
-namespace ApologistAi\Shares;
+namespace Apologist\Shares;
 
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Shares\Types\GetSharedMessagesResponse;
-use ApologistAi\Exceptions\ApologistAiException;
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Environments;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\RawClient;
+use Apologist\Shares\Types\GetSharedMessagesResponse;
+use Apologist\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Environments;
+use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Channels\Types;
+namespace Apologist\Channels\Types;
 
 enum VerifyFacebookWebhookRequestHubMode: string
 {

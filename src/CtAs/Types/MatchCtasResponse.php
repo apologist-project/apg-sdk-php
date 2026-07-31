@@ -1,10 +1,10 @@
 <?php
 
-namespace ApologistAi\CtAs\Types;
+namespace Apologist\CtAs\Types;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Types\ArrayType;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Types\ArrayType;
 
 class MatchCtasResponse extends JsonSerializableType
 {
