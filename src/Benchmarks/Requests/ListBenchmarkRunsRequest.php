@@ -1,8 +1,8 @@
 <?php
 
-namespace ApologistAi\Benchmarks\Requests;
+namespace Apologist\Benchmarks\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonSerializableType;
 
 class ListBenchmarkRunsRequest extends JsonSerializableType
 {

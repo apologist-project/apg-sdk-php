@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Evaluators\Types;
+namespace Apologist\Evaluators\Types;
 
 enum EvaluatorRequestReasoningEffort: string
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace ApologistAi\Chat\Requests;
+namespace Apologist\Chat\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonSerializableType;
 
 class ListChatCompletionsRequest extends JsonSerializableType
 {

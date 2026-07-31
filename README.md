@@ -1,7 +1,7 @@
 # ApologistAi PHP Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fapologist-project%2Fapg-sdk-php)
-[![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/Apologist)
+[![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/apologist/apologist)
 
 The ApologistAi PHP library provides convenient access to the ApologistAi APIs from PHP.
 
@@ -26,7 +26,7 @@ The ApologistAi PHP library provides convenient access to the ApologistAi APIs f
 ## Installation
 
 ```sh
-composer require Apologist
+composer require apologist/apologist
 ```
 
 ## Usage
@@ -38,9 +38,9 @@ Instantiate and use the client with the following:
 
 namespace Example;
 
-use ApologistAi\ApologistAiClient;
+use Apologist\ApologistAgent;
 
-$client = new ApologistAiClient(
+$client = new ApologistAgent(
     apiKey: '<value>',
 );
 $client->chat->createChatCompletion(
@@ -115,10 +115,10 @@ This SDK allows you to configure different environments for API requests.
 The SDK defaults to the `Default_` environment. To use a different environment, pass it to the client constructor:
 
 ```php
-use ApologistAi\ApologistAiClient;
-use ApologistAi\Environments;
+use Apologist\ApologistAgent;
+use Apologist\Environments;
 
-$client = new ApologistAiClient(
+$client = new ApologistAgent(
     token: '<YOUR_TOKEN>',
     options: [
         'baseUrl' => Environments::Staging->value
@@ -135,8 +135,8 @@ Available environments:
 When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
 
 ```php
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Exceptions\ApologistAiException;
 
 try {
     $response = $client->chat->createChatCompletion(...);
@@ -157,7 +157,7 @@ By default, if no client is provided, the SDK will use `php-http/discovery` to f
 However, you can pass your own client that adheres to `ClientInterface`:
 
 ```php
-use ApologistAi\ApologistAiClient;
+use Apologist\ApologistAgent;
 
 // Pass any PSR-18 compatible HTTP client implementation.
 // For example, using Guzzle:
@@ -165,7 +165,7 @@ $customClient = new \GuzzleHttp\Client([
     'timeout' => 5.0,
 ]);
 
-$client = new ApologistAiClient(options: [
+$client = new ApologistAgent(options: [
     'client' => $customClient
 ]);
 
@@ -173,7 +173,7 @@ $client = new ApologistAiClient(options: [
 // $customClient = (new \Symfony\Component\HttpClient\Psr18Client())
 //     ->withOptions(['timeout' => 5.0]);
 //
-// $client = new ApologistAiClient(options: [
+// $client = new ApologistAgent(options: [
 //     'client' => $customClient
 // ]);
 ```

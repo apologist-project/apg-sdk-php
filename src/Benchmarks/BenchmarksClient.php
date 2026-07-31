@@ -1,21 +1,21 @@
 <?php
 
-namespace ApologistAi\Benchmarks;
+namespace Apologist\Benchmarks;
 
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Benchmarks\Requests\ListBenchmarkRunsRequest;
-use ApologistAi\Benchmarks\Types\ListBenchmarkRunsResponse;
-use ApologistAi\Exceptions\ApologistAiException;
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Environments;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\RawClient;
+use Apologist\Benchmarks\Requests\ListBenchmarkRunsRequest;
+use Apologist\Benchmarks\Types\ListBenchmarkRunsResponse;
+use Apologist\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Environments;
+use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use ApologistAi\Benchmarks\Requests\BenchmarkRunRequest;
-use ApologistAi\Core\Json\JsonDecoder;
-use ApologistAi\Benchmarks\Types\GetBenchmarkRunResponse;
+use Apologist\Benchmarks\Requests\BenchmarkRunRequest;
+use Apologist\Core\Json\JsonDecoder;
+use Apologist\Benchmarks\Types\GetBenchmarkRunResponse;
 
 class BenchmarksClient
 {

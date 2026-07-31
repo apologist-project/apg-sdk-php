@@ -1,10 +1,10 @@
 <?php
 
-namespace ApologistAi\Types;
+namespace Apologist\Types;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Types\ArrayType;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Types\ArrayType;
 
 /**
  * Required when type is json_schema. Supplies the JSON Schema the structured output must conform to. Structured outputs are non-streaming.

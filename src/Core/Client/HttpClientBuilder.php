@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Core\Client;
+namespace Apologist\Core\Client;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;

@@ -1,12 +1,12 @@
 <?php
 
-namespace ApologistAi\Core\Json;
+namespace Apologist\Core\Json;
 
 use DateTime;
 use Exception;
 use JsonException;
-use ApologistAi\Core\Types\Constant;
-use ApologistAi\Core\Types\Union;
+use Apologist\Core\Types\Constant;
+use Apologist\Core\Types\Union;
 
 class JsonDeserializer
 {

@@ -1,23 +1,23 @@
 <?php
 
-namespace ApologistAi\Channels;
+namespace Apologist\Channels;
 
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Channels\Types\GetDiscordChannelStatusResponse;
-use ApologistAi\Exceptions\ApologistAiException;
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Environments;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\RawClient;
+use Apologist\Channels\Types\GetDiscordChannelStatusResponse;
+use Apologist\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Environments;
+use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use ApologistAi\Channels\Requests\ReceiveDiscordInteractionRequest;
-use ApologistAi\Channels\Requests\VerifyFacebookWebhookRequest;
-use ApologistAi\Channels\Requests\ReceiveFacebookMessageRequest;
-use ApologistAi\Channels\Requests\ReceiveTelegramUpdateRequest;
-use ApologistAi\Channels\Requests\ReceiveTwilioMessageRequest;
-use ApologistAi\Core\Client\UrlEncodedApiRequest;
+use Apologist\Channels\Requests\ReceiveDiscordInteractionRequest;
+use Apologist\Channels\Requests\VerifyFacebookWebhookRequest;
+use Apologist\Channels\Requests\ReceiveFacebookMessageRequest;
+use Apologist\Channels\Requests\ReceiveTelegramUpdateRequest;
+use Apologist\Channels\Requests\ReceiveTwilioMessageRequest;
+use Apologist\Core\Client\UrlEncodedApiRequest;
 
 class ChannelsClient
 {

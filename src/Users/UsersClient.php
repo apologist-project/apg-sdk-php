@@ -1,23 +1,23 @@
 <?php
 
-namespace ApologistAi\Users;
+namespace Apologist\Users;
 
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Users\Requests\ListUsersRequest;
-use ApologistAi\Users\Types\ListUsersResponse;
-use ApologistAi\Exceptions\ApologistAiException;
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Environments;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\RawClient;
+use Apologist\Users\Requests\ListUsersRequest;
+use Apologist\Users\Types\ListUsersResponse;
+use Apologist\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Environments;
+use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use ApologistAi\Users\Requests\ListUserFlagsRequest;
-use ApologistAi\Users\Types\ListUserFlagsResponse;
-use ApologistAi\Users\Types\GetUserResponse;
-use ApologistAi\Users\Requests\UserUpdateRequest;
-use ApologistAi\Users\Types\UpdateUserResponse;
+use Apologist\Users\Requests\ListUserFlagsRequest;
+use Apologist\Users\Types\ListUserFlagsResponse;
+use Apologist\Users\Types\GetUserResponse;
+use Apologist\Users\Requests\UserUpdateRequest;
+use Apologist\Users\Types\UpdateUserResponse;
 
 class UsersClient
 {

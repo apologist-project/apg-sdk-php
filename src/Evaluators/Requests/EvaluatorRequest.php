@@ -1,13 +1,13 @@
 <?php
 
-namespace ApologistAi\Evaluators\Requests;
+namespace Apologist\Evaluators\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Types\Union;
-use ApologistAi\Evaluators\Types\EvaluatorRequestReasoningEffort;
-use ApologistAi\Evaluators\Types\EvaluatorRequestVerbosity;
-use ApologistAi\Core\Types\ArrayType;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Types\Union;
+use Apologist\Evaluators\Types\EvaluatorRequestReasoningEffort;
+use Apologist\Evaluators\Types\EvaluatorRequestVerbosity;
+use Apologist\Core\Types\ArrayType;
 
 class EvaluatorRequest extends JsonSerializableType
 {

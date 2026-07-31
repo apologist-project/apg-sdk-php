@@ -1,7 +1,7 @@
 {
-  "name": "Apologist",
+  "name": "apologist/apologist",
   "version": "0.1.1",
-  "description": "ApologistAi PHP Library",
+  "description": "Apologist PHP Library",
   "keywords": [
     "apologist-ai",
     "api",
@@ -27,12 +27,12 @@
   },
   "autoload": {
     "psr-4": {
-      "ApologistAi\\": "src/"
+      "Apologist\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ApologistAi\\Tests\\": "tests/"
+      "Apologist\\Tests\\": "tests/"
     }
   },
   "scripts": {

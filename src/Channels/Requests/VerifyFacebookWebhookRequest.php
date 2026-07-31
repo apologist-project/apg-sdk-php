@@ -1,9 +1,9 @@
 <?php
 
-namespace ApologistAi\Channels\Requests;
+namespace Apologist\Channels\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Channels\Types\VerifyFacebookWebhookRequestHubMode;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Channels\Types\VerifyFacebookWebhookRequestHubMode;
 
 class VerifyFacebookWebhookRequest extends JsonSerializableType
 {

@@ -1,23 +1,23 @@
 <?php
 
-namespace ApologistAi\Corpus;
+namespace Apologist\Corpus;
 
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
-use ApologistAi\Corpus\Requests\CorpusSearchRequest;
-use ApologistAi\Corpus\Types\SearchCorpusResponse;
-use ApologistAi\Exceptions\ApologistAiException;
-use ApologistAi\Exceptions\ApologistAiApiException;
-use ApologistAi\Core\Json\JsonApiRequest;
-use ApologistAi\Environments;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\RawClient;
+use Apologist\Corpus\Requests\CorpusSearchRequest;
+use Apologist\Corpus\Types\SearchCorpusResponse;
+use Apologist\Exceptions\ApologistAiException;
+use Apologist\Exceptions\ApologistAiApiException;
+use Apologist\Core\Json\JsonApiRequest;
+use Apologist\Environments;
+use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use ApologistAi\Corpus\Requests\ViewRequest;
-use ApologistAi\Types\SuccessResponse;
-use ApologistAi\Corpus\Requests\ImpressionRequest;
-use ApologistAi\Corpus\Requests\LogCorpusReferralRedirectRequest;
-use ApologistAi\Corpus\Requests\ReferralRequest;
+use Apologist\Corpus\Requests\ViewRequest;
+use Apologist\Types\SuccessResponse;
+use Apologist\Corpus\Requests\ImpressionRequest;
+use Apologist\Corpus\Requests\LogCorpusReferralRedirectRequest;
+use Apologist\Corpus\Requests\ReferralRequest;
 
 class CorpusClient
 {

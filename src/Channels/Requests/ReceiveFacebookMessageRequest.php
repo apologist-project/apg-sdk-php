@@ -1,8 +1,8 @@
 <?php
 
-namespace ApologistAi\Channels\Requests;
+namespace Apologist\Channels\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonSerializableType;
 
 class ReceiveFacebookMessageRequest extends JsonSerializableType
 {

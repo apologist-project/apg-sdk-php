@@ -1,11 +1,11 @@
 <?php
 
-namespace ApologistAi\Types;
+namespace Apologist\Types;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
 use DateTime;
-use ApologistAi\Core\Types\Date;
+use Apologist\Core\Types\Date;
 
 class WebhookEventInfo extends JsonSerializableType
 {

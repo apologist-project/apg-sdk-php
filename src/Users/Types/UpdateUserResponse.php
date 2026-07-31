@@ -1,10 +1,10 @@
 <?php
 
-namespace ApologistAi\Users\Types;
+namespace Apologist\Users\Types;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Types\User;
-use ApologistAi\Core\Json\JsonProperty;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Types\User;
+use Apologist\Core\Json\JsonProperty;
 
 class UpdateUserResponse extends JsonSerializableType
 {

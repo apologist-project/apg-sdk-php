@@ -1,15 +1,15 @@
 <?php
 
-namespace ApologistAi\Core\Json;
+namespace Apologist\Core\Json;
 
 use DateTime;
 use Exception;
 use JsonException;
 use ReflectionNamedType;
 use ReflectionProperty;
-use ApologistAi\Core\Types\ArrayType;
-use ApologistAi\Core\Types\Date;
-use ApologistAi\Core\Types\Union;
+use Apologist\Core\Types\ArrayType;
+use Apologist\Core\Types\Date;
+use Apologist\Core\Types\Union;
 
 /**
  * Provides generic serialization and deserialization methods.

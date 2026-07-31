@@ -1,11 +1,11 @@
 <?php
 
-namespace ApologistAi\Users\Types;
+namespace Apologist\Users\Types;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Types\User;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Types\ArrayType;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Types\User;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Types\ArrayType;
 
 class ListUsersResponse extends JsonSerializableType
 {

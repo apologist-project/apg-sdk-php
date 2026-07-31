@@ -1,6 +1,6 @@
 <?php
 
-namespace ApologistAi\Core\Client;
+namespace Apologist\Core\Client;
 
 class UrlEncodedApiRequest extends BaseApiRequest
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace ApologistAi\Users\Requests;
+namespace Apologist\Users\Requests;
 
-use ApologistAi\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonSerializableType;
 
 class ListUserFlagsRequest extends JsonSerializableType
 {

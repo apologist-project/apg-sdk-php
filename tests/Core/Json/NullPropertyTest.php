@@ -1,10 +1,10 @@
 <?php
 
-namespace ApologistAi\Tests\Core\Json;
+namespace Apologist\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
-use ApologistAi\Core\Json\JsonProperty;
-use ApologistAi\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
+use Apologist\Core\Json\JsonSerializableType;
 
 class NullProperty extends JsonSerializableType
 {

@@ -1,19 +1,19 @@
 <?php
 
-namespace ApologistAi;
+namespace Apologist;
 
-use ApologistAi\Chat\ChatClient;
-use ApologistAi\Corpus\CorpusClient;
-use ApologistAi\Evaluators\EvaluatorsClient;
-use ApologistAi\CtAs\CtAsClient;
-use ApologistAi\Users\UsersClient;
-use ApologistAi\Benchmarks\BenchmarksClient;
-use ApologistAi\Channels\ChannelsClient;
-use ApologistAi\Shares\SharesClient;
+use Apologist\Chat\ChatClient;
+use Apologist\Corpus\CorpusClient;
+use Apologist\Evaluators\EvaluatorsClient;
+use Apologist\CtAs\CtAsClient;
+use Apologist\Users\UsersClient;
+use Apologist\Benchmarks\BenchmarksClient;
+use Apologist\Channels\ChannelsClient;
+use Apologist\Shares\SharesClient;
 use Psr\Http\Client\ClientInterface;
-use ApologistAi\Core\Client\RawClient;
+use Apologist\Core\Client\RawClient;
 
-class ApologistAiClient
+class ApologistAgent
 {
     /**
      * @var ChatClient $chat
@@ -89,9 +89,9 @@ class ApologistAiClient
     ) {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
-            'X-Fern-SDK-Name' => 'ApologistAi',
+            'X-Fern-SDK-Name' => 'Apologist',
             'X-Fern-SDK-Version' => '0.1.1',
-            'User-Agent' => 'Apologist/0.1.1',
+            'User-Agent' => 'apologist/apologist/0.1.1',
         ];
         if ($apiKey != null) {
             $defaultHeaders['x-api-key'] = $apiKey;

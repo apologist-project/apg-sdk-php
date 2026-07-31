@@ -1,9 +1,9 @@
 <?php
 
-namespace ApologistAi\Core\Multipart;
+namespace Apologist\Core\Multipart;
 
-use ApologistAi\Core\Client\BaseApiRequest;
-use ApologistAi\Core\Client\HttpMethod;
+use Apologist\Core\Client\BaseApiRequest;
+use Apologist\Core\Client\HttpMethod;
 
 class MultipartApiRequest extends BaseApiRequest
 {

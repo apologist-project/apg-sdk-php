@@ -1,9 +1,9 @@
 <?php
 
-namespace ApologistAi\Channels\Types;
+namespace Apologist\Channels\Types;
 
-use ApologistAi\Core\Json\JsonSerializableType;
-use ApologistAi\Core\Json\JsonProperty;
+use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Core\Json\JsonProperty;
 
 class GetDiscordChannelStatusResponse extends JsonSerializableType
 {
