@@ -8,6 +8,7 @@ use Apologist\Evaluators\EvaluatorsClient;
 use Apologist\CtAs\CtAsClient;
 use Apologist\Users\UsersClient;
 use Apologist\Benchmarks\BenchmarksClient;
+use Apologist\Conversations\ConversationsClient;
 use Apologist\Channels\ChannelsClient;
 use Apologist\Shares\SharesClient;
 use Psr\Http\Client\ClientInterface;
@@ -44,6 +45,16 @@ class AgentClient
      * @var BenchmarksClient $benchmarks
      */
     public BenchmarksClient $benchmarks;
+
+    /**
+     * @var \Apologist\Agent\AgentClient $agent
+     */
+    public \Apologist\Agent\AgentClient $agent;
+
+    /**
+     * @var ConversationsClient $conversations
+     */
+    public ConversationsClient $conversations;
 
     /**
      * @var ChannelsClient $channels
@@ -90,8 +101,8 @@ class AgentClient
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Apologist',
-            'X-Fern-SDK-Version' => '0.0.9',
-            'User-Agent' => 'apologist/apologist/0.0.9',
+            'X-Fern-SDK-Version' => '0.0.12',
+            'User-Agent' => 'apologist/apologist/0.0.12',
         ];
         if ($apiKey != null) {
             $defaultHeaders['x-api-key'] = $apiKey;
@@ -121,6 +132,8 @@ class AgentClient
         $this->ctAs = new CtAsClient($this->client, $this->options);
         $this->users = new UsersClient($this->client, $this->options);
         $this->benchmarks = new BenchmarksClient($this->client, $this->options);
+        $this->agent = new \Apologist\Agent\AgentClient($this->client, $this->options);
+        $this->conversations = new ConversationsClient($this->client, $this->options);
         $this->channels = new ChannelsClient($this->client, $this->options);
         $this->shares = new SharesClient($this->client, $this->options);
     }

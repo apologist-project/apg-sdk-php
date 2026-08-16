@@ -2185,6 +2185,318 @@ $client->benchmarks->getBenchmarkRun(
 </dl>
 </details>
 
+## Agent
+<details><summary><code>$client-&gt;agent-&gt;pauseAgent() -> ?PauseAgentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pauses the agent globally and fans out pause transition messages to open conversations. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->agent->pauseAgent();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;agent-&gt;resumeAgent() -> ?ResumeAgentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resumes the agent globally and fans out resume transition messages to open conversations. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->agent->resumeAgent();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Conversations
+<details><summary><code>$client-&gt;conversations-&gt;listConversations($request) -> ?ListConversationsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a paginated list of conversations for the requesting agent, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->conversations->listConversations(
+    new ListConversationsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$perPage:** `?int` — Results per page (clamped to 100).
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;conversations-&gt;getConversation($id) -> ?GetConversationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a single conversation by internal UUID or team-scoped external id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->conversations->getConversation(
+    'id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` — The conversation UUID or team-scoped external id
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;conversations-&gt;pauseConversation($id) -> ?PauseConversationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pauses the agent on a conversation identified by internal UUID or team-scoped external id. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->conversations->pauseConversation(
+    'id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` — The conversation UUID or team-scoped external id
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;conversations-&gt;resumeConversation($id) -> ?ResumeConversationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resumes the agent on a conversation identified by internal UUID or team-scoped external id. Requires an API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->conversations->resumeConversation(
+    'id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` — The conversation UUID or team-scoped external id
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Channels
 <details><summary><code>$client-&gt;channels-&gt;getDiscordChannelStatus($id) -> ?GetDiscordChannelStatusResponse</code></summary>
 <dl>
@@ -2802,6 +3114,167 @@ $client->channels->receiveTwilioMessage(
 <dd>
 
 **$body:** `?string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;channels-&gt;verifyWhatsAppWebhook($id, $request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->channels->verifyWhatsAppWebhook(
+    'id',
+    new VerifyWhatsAppWebhookRequest([
+        'hubMode' => VerifyWhatsAppWebhookRequestHubMode::Subscribe->value,
+        'hubVerifyToken' => 'hub.verify_token',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` — The channel id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$hubMode:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$hubVerifyToken:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$hubChallenge:** `?string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;channels-&gt;receiveWhatsAppMessage($id, $request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->channels->receiveWhatsAppMessage(
+    'id',
+    new ReceiveWhatsAppMessageRequest([
+        'body' => [
+            'key' => "value",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` — The channel id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$hubSignature256:** `?string` — Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `array` — WhatsApp Cloud API webhook payload (`entry` + `changes`).
     
 </dd>
 </dl>
