@@ -18,7 +18,13 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-php-sdk: 2.16.0
-current_generation: 3dc8d2cf673eee91609baa5336033b6ec8cddab4
+  - commit_sha: 5ce8751997aeb40df27aa80b1271e2cbb71c632c
+    tree_hash: fb2bb4dda311c54995c1d6e5aaba623dba3139b2
+    timestamp: 2026-08-16T19:24:16.598Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-php-sdk: 2.16.0
+current_generation: 5ce8751997aeb40df27aa80b1271e2cbb71c632c
 patches:
   - id: patch-d9d22f51
     content_hash: sha256:a7c46484e3dd32fc6936ab5aebc5af32bfdd273b959ac6e23f5721b37649e2e5
@@ -66,6 +72,88 @@ patches:
         {
           "name": "apologist/apologist",
           "version": "1.0.4",
+          "description": "Apologist PHP Library",
+          "keywords": [
+            "apologist-ai",
+            "api",
+            "sdk"
+          ],
+          "license": [],
+          "require": {
+            "php": "^8.1",
+            "ext-json": "*",
+            "psr/http-client": "^1.0",
+            "psr/http-client-implementation": "^1.0",
+            "psr/http-factory": "^1.0",
+            "psr/http-factory-implementation": "^1.0",
+            "psr/http-message": "^1.1 || ^2.0",
+            "php-http/discovery": "^1.0",
+            "php-http/multipart-stream-builder": "^1.0"
+          },
+          "require-dev": {
+            "phpunit/phpunit": "^12.5.22",
+            "friendsofphp/php-cs-fixer": "3.5.0",
+            "phpstan/phpstan": "^1.12",
+            "guzzlehttp/guzzle": "^7.4"
+          },
+          "autoload": {
+            "psr-4": {
+              "Apologist\\": "src/"
+            }
+          },
+          "autoload-dev": {
+            "psr-4": {
+              "Apologist\\Tests\\": "tests/"
+            }
+          },
+          "scripts": {
+            "build": [
+              "@php -l src",
+              "@php -l tests"
+            ],
+            "test": "phpunit",
+            "analyze": "phpstan analyze src tests --memory-limit=1G"
+          }
+        }
+    status: unresolved
+  - id: patch-6af0f6bb
+    content_hash: sha256:970fe071507f88dde605442d87be162cf12cc9c774521a700e55c55459d2c25f
+    original_commit: 6af0f6bbcf2ad65ffee88a5fb0f29c81b34b5078
+    original_message: Release 1.1.0.
+    original_author: Jake Carlson <jake@carlsonville.com>
+    base_generation: f92a4460c4d3b7c3437bd07d817a8de04bcb1e84
+    files:
+      - composer.json
+    patch_content: |+
+      From 6af0f6bbcf2ad65ffee88a5fb0f29c81b34b5078 Mon Sep 17 00:00:00 2001
+      From: Jake Carlson <jake@carlsonville.com>
+      Date: Sun, 16 Aug 2026 13:28:34 -0500
+      Subject: [PATCH] Release 1.1.0.
+
+      ---
+       composer.json | 2 +-
+       1 file changed, 1 insertion(+), 1 deletion(-)
+
+      diff --git a/composer.json b/composer.json
+      index 6906a15..949b4d3 100644
+      --- a/composer.json
+      +++ b/composer.json
+      @@ -1,6 +1,6 @@
+       {
+         "name": "apologist/apologist",
+      -  "version": "0.0.9",
+      +  "version": "1.1.0",
+         "description": "Apologist PHP Library",
+         "keywords": [
+           "apologist-ai",
+      -- 
+      2.52.0
+
+    theirs_snapshot:
+      composer.json: |
+        {
+          "name": "apologist/apologist",
+          "version": "1.1.0",
           "description": "Apologist PHP Library",
           "keywords": [
             "apologist-ai",
