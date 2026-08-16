@@ -20,6 +20,8 @@ use Apologist\Channels\Requests\ReceiveFacebookMessageRequest;
 use Apologist\Channels\Requests\ReceiveTelegramUpdateRequest;
 use Apologist\Channels\Requests\ReceiveTwilioMessageRequest;
 use Apologist\Core\Client\UrlEncodedApiRequest;
+use Apologist\Channels\Requests\VerifyWhatsAppWebhookRequest;
+use Apologist\Channels\Requests\ReceiveWhatsAppMessageRequest;
 
 class ChannelsClient
 {
@@ -542,6 +544,127 @@ class ChannelsClient
                     path: "channels/{$id}/twilio",
                     method: HttpMethod::POST,
                     body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+     *
+     * Example:
+     * ```php
+     * $client->channels->verifyWhatsAppWebhook(
+     *     'id',
+     *     new VerifyWhatsAppWebhookRequest([
+     *         'hubMode' => VerifyWhatsAppWebhookRequestHubMode::Subscribe->value,
+     *         'hubVerifyToken' => 'hub.verify_token',
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $id The channel id
+     * @param VerifyWhatsAppWebhookRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return string
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function verifyWhatsAppWebhook(string $id, VerifyWhatsAppWebhookRequest $request, ?array $options = null): string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        $query['hub.mode'] = $request->hubMode;
+        $query['hub.verify_token'] = $request->hubVerifyToken;
+        if ($request->hubChallenge != null) {
+            $query['hub.challenge'] = $request->hubChallenge;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "channels/{$id}/whatsapp",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return $response->getBody()->getContents();
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+     *
+     * Example:
+     * ```php
+     * $client->channels->receiveWhatsAppMessage(
+     *     'id',
+     *     new ReceiveWhatsAppMessageRequest([
+     *         'body' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $id The channel id
+     * @param ReceiveWhatsAppMessageRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function receiveWhatsAppMessage(string $id, ReceiveWhatsAppMessageRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->hubSignature256 != null) {
+            $headers['x-hub-signature-256'] = $request->hubSignature256;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "channels/{$id}/whatsapp",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request->body,
                 ),
                 $options,
             );
