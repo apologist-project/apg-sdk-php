@@ -7,9 +7,9 @@
     "clientName": "AgentClient",
     "namespace": "Apologist"
   },
-  "originGitCommit": "260686d6daa2090b871f8509b0b2661bc33c170c",
+  "originGitCommit": "b34e9073b4d563508b6a9eab41f15e10ab60fb15",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
   "ciProvider": "github",
-  "sdkVersion": "0.0.6"
+  "sdkVersion": "0.0.9"
 }

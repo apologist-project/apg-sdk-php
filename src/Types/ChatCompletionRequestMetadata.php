@@ -58,6 +58,12 @@ class ChatCompletionRequestMetadata extends JsonSerializableType
     public ?string $device;
 
     /**
+     * @var ?string $referralCode Acquisition / campaign referral code stored on the user first-write-wins. Empty values are ignored; an existing user referral_code is never overwritten. The Agent UI maps ?ref=, then ?referral_code=, then ?utm_campaign= into this field.
+     */
+    #[JsonProperty('referral_code')]
+    public ?string $referralCode;
+
+    /**
      * @var ?int $sharedPrompt
      */
     #[JsonProperty('shared_prompt')]
@@ -85,6 +91,7 @@ class ChatCompletionRequestMetadata extends JsonSerializableType
      *   parentHost?: ?string,
      *   session?: ?string,
      *   device?: ?string,
+     *   referralCode?: ?string,
      *   sharedPrompt?: ?int,
      *   translation?: ?string,
      *   variables?: ?array<string, ?string>,
@@ -101,6 +108,7 @@ class ChatCompletionRequestMetadata extends JsonSerializableType
         $this->parentHost = $values['parentHost'] ?? null;
         $this->session = $values['session'] ?? null;
         $this->device = $values['device'] ?? null;
+        $this->referralCode = $values['referralCode'] ?? null;
         $this->sharedPrompt = $values['sharedPrompt'] ?? null;
         $this->translation = $values['translation'] ?? null;
         $this->variables = $values['variables'] ?? null;
