@@ -21,6 +21,12 @@ class User extends JsonSerializableType
     public ?string $externalId;
 
     /**
+     * @var ?string $referralCode First-write-wins acquisition / campaign referral code.
+     */
+    #[JsonProperty('referral_code')]
+    public ?string $referralCode;
+
+    /**
      * @var ?int $teamId
      */
     #[JsonProperty('team_id')]
@@ -60,6 +66,7 @@ class User extends JsonSerializableType
      * @param array{
      *   id?: ?string,
      *   externalId?: ?string,
+     *   referralCode?: ?string,
      *   teamId?: ?int,
      *   createdAt?: ?string,
      *   migratedAt?: ?string,
@@ -73,6 +80,7 @@ class User extends JsonSerializableType
     ) {
         $this->id = $values['id'] ?? null;
         $this->externalId = $values['externalId'] ?? null;
+        $this->referralCode = $values['referralCode'] ?? null;
         $this->teamId = $values['teamId'] ?? null;
         $this->createdAt = $values['createdAt'] ?? null;
         $this->migratedAt = $values['migratedAt'] ?? null;

@@ -13,6 +13,8 @@ use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Apologist\Channels\Requests\ReceiveDiscordInteractionRequest;
+use Apologist\Channels\Types\GetLineChannelStatusResponse;
+use Apologist\Channels\Requests\ReceiveLineWebhookRequest;
 use Apologist\Channels\Requests\VerifyFacebookWebhookRequest;
 use Apologist\Channels\Requests\ReceiveFacebookMessageRequest;
 use Apologist\Channels\Requests\ReceiveTelegramUpdateRequest;
@@ -151,6 +153,121 @@ class ChannelsClient
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "channels/{$id}/discord",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Returns the status of the LINE channel. Used as a lightweight health/verification endpoint.
+     *
+     * Example:
+     * ```php
+     * $client->channels->getLineChannelStatus(
+     *     'id',
+     * );
+     * ```
+     *
+     * @param string $id The channel id
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?GetLineChannelStatusResponse
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function getLineChannelStatus(string $id, ?array $options = null): ?GetLineChannelStatusResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "channels/{$id}/line",
+                    method: HttpMethod::GET,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return GetLineChannelStatusResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Receives LINE Messaging API webhook events for the channel. Requests are verified via the `x-line-signature` HMAC-SHA256 (Base64) header using the channel secret unless an `api_key` is present. Payload shape is defined by LINE. The route acknowledges quickly and processes text `message` and `follow` events asynchronously.
+     *
+     * Example:
+     * ```php
+     * $client->channels->receiveLineWebhook(
+     *     'id',
+     *     new ReceiveLineWebhookRequest([
+     *         'body' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $id The channel id
+     * @param ReceiveLineWebhookRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function receiveLineWebhook(string $id, ReceiveLineWebhookRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->lineSignature != null) {
+            $headers['x-line-signature'] = $request->lineSignature;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "channels/{$id}/line",
                     method: HttpMethod::POST,
                     headers: $headers,
                     body: $request->body,
