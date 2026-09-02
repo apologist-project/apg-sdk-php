@@ -4,7 +4,7 @@ namespace Apologist\Channels;
 
 use Psr\Http\Client\ClientInterface;
 use Apologist\Core\Client\RawClient;
-use Apologist\Channels\Types\GetDiscordChannelStatusResponse;
+use Apologist\Channels\Types\GetChatwootChannelStatusResponse;
 use Apologist\Exceptions\ApologistAiException;
 use Apologist\Exceptions\ApologistAiApiException;
 use Apologist\Core\Json\JsonApiRequest;
@@ -12,6 +12,8 @@ use Apologist\Environments;
 use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Apologist\Channels\Requests\ReceiveChatwootWebhookRequest;
+use Apologist\Channels\Types\GetDiscordChannelStatusResponse;
 use Apologist\Channels\Requests\ReceiveDiscordInteractionRequest;
 use Apologist\Channels\Types\GetLineChannelStatusResponse;
 use Apologist\Channels\Requests\ReceiveLineWebhookRequest;
@@ -57,6 +59,124 @@ class ChannelsClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+    }
+
+    /**
+     * Returns the status of the Chatwoot channel. Used as a lightweight health/verification endpoint.
+     *
+     * Example:
+     * ```php
+     * $client->channels->getChatwootChannelStatus(
+     *     'id',
+     * );
+     * ```
+     *
+     * @param string $id The channel id
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?GetChatwootChannelStatusResponse
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function getChatwootChannelStatus(string $id, ?array $options = null): ?GetChatwootChannelStatusResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "channels/{$id}/chatwoot",
+                    method: HttpMethod::GET,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return GetChatwootChannelStatusResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the messaging inbox (Facebook, website widget, and others). This Agent replies through the Chatwoot API and maps native bot handoff to conversation pause/resume. Requests are verified via the `X-Chatwoot-Signature` HMAC-SHA256 header using the configured webhook secret unless an `api_key` is present and no secret is set. The route acknowledges immediately (Chatwoot times out in about 5 seconds) and processes events asynchronously.
+     *
+     * Example:
+     * ```php
+     * $client->channels->receiveChatwootWebhook(
+     *     'id',
+     *     new ReceiveChatwootWebhookRequest([
+     *         'body' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $id The channel id
+     * @param ReceiveChatwootWebhookRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function receiveChatwootWebhook(string $id, ReceiveChatwootWebhookRequest $request, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->chatwootSignature != null) {
+            $headers['X-Chatwoot-Signature'] = $request->chatwootSignature;
+        }
+        if ($request->chatwootTimestamp != null) {
+            $headers['X-Chatwoot-Timestamp'] = $request->chatwootTimestamp;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "channels/{$id}/chatwoot",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
