@@ -18,6 +18,8 @@ use Apologist\Users\Types\ListUserFlagsResponse;
 use Apologist\Users\Types\GetUserResponse;
 use Apologist\Users\Requests\UserUpdateRequest;
 use Apologist\Users\Types\UpdateUserResponse;
+use Apologist\Users\Types\ScrubUserResponse;
+use Apologist\Users\Types\AnonymizeUserResponse;
 
 class UsersClient
 {
@@ -296,6 +298,116 @@ class UsersClient
                     return null;
                 }
                 return UpdateUserResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Replaces this user's message-adjacent text with a placeholder. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+     *
+     * Example:
+     * ```php
+     * $client->users->scrubUser(
+     *     'user_id',
+     * );
+     * ```
+     *
+     * @param string $userId The user's external id or internal id
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ScrubUserResponse
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function scrubUser(string $userId, ?array $options = null): ?ScrubUserResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "users/{$userId}/scrub",
+                    method: HttpMethod::POST,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ScrubUserResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Redacts detected personal data in this user's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+     *
+     * Example:
+     * ```php
+     * $client->users->anonymizeUser(
+     *     'user_id',
+     * );
+     * ```
+     *
+     * @param string $userId The user's external id or internal id
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?AnonymizeUserResponse
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function anonymizeUser(string $userId, ?array $options = null): ?AnonymizeUserResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "users/{$userId}/anonymize",
+                    method: HttpMethod::POST,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return AnonymizeUserResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
