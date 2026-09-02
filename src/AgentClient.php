@@ -101,8 +101,8 @@ class AgentClient
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Apologist',
-            'X-Fern-SDK-Version' => '0.0.12',
-            'User-Agent' => 'apologist/apologist/0.0.12',
+            'X-Fern-SDK-Version' => '0.0.15',
+            'User-Agent' => 'apologist/apologist/0.0.15',
         ];
         if ($apiKey != null) {
             $defaultHeaders['x-api-key'] = $apiKey;
