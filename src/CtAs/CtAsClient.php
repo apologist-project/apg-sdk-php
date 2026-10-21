@@ -4,6 +4,7 @@ namespace Apologist\CtAs;
 
 use Psr\Http\Client\ClientInterface;
 use Apologist\Core\Client\RawClient;
+use Apologist\CtAs\Requests\CtaMatchRequest;
 use Apologist\CtAs\Types\MatchCtasResponse;
 use Apologist\Exceptions\ApologistAiException;
 use Apologist\Exceptions\ApologistAiApiException;
@@ -57,15 +58,11 @@ class CtAsClient
      * Example:
      * ```php
      * $client->ctAs->matchCtas(
-     *     [
-     *         'key' => "value",
-     *     ],
+     *     new CtaMatchRequest([]),
      * );
      * ```
      *
-     * @param (
-     *    mixed
-     * ) $request
+     * @param CtaMatchRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -78,7 +75,7 @@ class CtAsClient
      * @throws ApologistAiException
      * @throws ApologistAiApiException
      */
-    public function matchCtas(mixed $request, ?array $options = null): ?MatchCtasResponse
+    public function matchCtas(CtaMatchRequest $request = new CtaMatchRequest(), ?array $options = null): ?MatchCtasResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

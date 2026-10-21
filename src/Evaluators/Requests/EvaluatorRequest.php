@@ -4,6 +4,7 @@ namespace Apologist\Evaluators\Requests;
 
 use Apologist\Core\Json\JsonSerializableType;
 use Apologist\Core\Json\JsonProperty;
+use Apologist\Types\ChatMessage;
 use Apologist\Core\Types\Union;
 use Apologist\Evaluators\Types\EvaluatorRequestReasoningEffort;
 use Apologist\Evaluators\Types\EvaluatorRequestVerbosity;
@@ -26,10 +27,13 @@ class EvaluatorRequest extends JsonSerializableType
     /**
      * @var (
      *    string
-     *   |array<mixed>
-     * ) $content
+     *   |array<(
+     *    string
+     *   |ChatMessage
+     * )>
+     * ) $content Text to evaluate, an array of strings, or chat messages.
      */
-    #[JsonProperty('content'), Union('string', ['mixed'])]
+    #[JsonProperty('content'), Union('string', [new Union('string', ChatMessage::class)])]
     public string|array $content;
 
     /**
@@ -78,7 +82,10 @@ class EvaluatorRequest extends JsonSerializableType
      * @param array{
      *   content: (
      *    string
-     *   |array<mixed>
+     *   |array<(
+     *    string
+     *   |ChatMessage
+     * )>
      * ),
      *   frequencyPenalty?: ?float,
      *   confidenceThreshold?: ?float,

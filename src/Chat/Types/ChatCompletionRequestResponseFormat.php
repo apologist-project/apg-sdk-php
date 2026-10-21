@@ -1,6 +1,6 @@
 <?php
 
-namespace Apologist\Types;
+namespace Apologist\Chat\Types;
 
 use Apologist\Core\Json\JsonSerializableType;
 use Apologist\Core\Json\JsonProperty;

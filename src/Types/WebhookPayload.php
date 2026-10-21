@@ -7,7 +7,7 @@ use Apologist\Core\Json\JsonProperty;
 use Apologist\Core\Types\ArrayType;
 
 /**
- * Canonical JSON body POSTed to a configured webhook URL. `notification`, `event`, and `agent` are always present; the remaining sections appear only when relevant to the event. Treat the payload as additive and ignore unrecognised fields.
+ * Canonical JSON body POSTed to a configured webhook URL. `notification`, `event`, and `agent` are always present; `trace` is present when the event ran inside an instrumented API request. The remaining sections appear only when relevant to the event. Treat the payload as additive and ignore unrecognised fields.
  */
 class WebhookPayload extends JsonSerializableType
 {
@@ -60,7 +60,13 @@ class WebhookPayload extends JsonSerializableType
     public ?WebhookNamedRef $guardrail;
 
     /**
-     * @var ?WebhookNamedRef $evaluator Present for CTA/guardrail events that ran an evaluation.
+     * @var ?WebhookNamedRef $automation Present for automation_trigger events.
+     */
+    #[JsonProperty('automation')]
+    public ?WebhookNamedRef $automation;
+
+    /**
+     * @var ?WebhookNamedRef $evaluator Present for CTA, guardrail, or automation events that ran an evaluation.
      */
     #[JsonProperty('evaluator')]
     public ?WebhookNamedRef $evaluator;
@@ -72,6 +78,12 @@ class WebhookPayload extends JsonSerializableType
     public ?WebhookEvaluation $evaluation;
 
     /**
+     * @var ?WebhookPayloadTrace $trace OpenTelemetry context for the API request that produced this event. Present when the Agent created or continued a W3C trace.
+     */
+    #[JsonProperty('trace')]
+    public ?WebhookPayloadTrace $trace;
+
+    /**
      * @param array{
      *   notification: WebhookNotificationRef,
      *   event: WebhookEventInfo,
@@ -81,8 +93,10 @@ class WebhookPayload extends JsonSerializableType
      *   platform?: ?WebhookNamedRef,
      *   cta?: ?WebhookCta,
      *   guardrail?: ?WebhookNamedRef,
+     *   automation?: ?WebhookNamedRef,
      *   evaluator?: ?WebhookNamedRef,
      *   evaluation?: ?WebhookEvaluation,
+     *   trace?: ?WebhookPayloadTrace,
      * } $values
      */
     public function __construct(
@@ -96,8 +110,10 @@ class WebhookPayload extends JsonSerializableType
         $this->platform = $values['platform'] ?? null;
         $this->cta = $values['cta'] ?? null;
         $this->guardrail = $values['guardrail'] ?? null;
+        $this->automation = $values['automation'] ?? null;
         $this->evaluator = $values['evaluator'] ?? null;
         $this->evaluation = $values['evaluation'] ?? null;
+        $this->trace = $values['trace'] ?? null;
     }
 
     /**

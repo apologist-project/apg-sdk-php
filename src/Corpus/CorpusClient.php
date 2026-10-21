@@ -127,7 +127,7 @@ class CorpusClient
      * );
      * ```
      *
-     * @param string $model The model type (e.g., 'source')
+     * @param string $model Listing model. One of collection, contributor, organization, or source.
      * @param string $id The ID of the corpus item
      * @param ViewRequest $request
      * @param ?array{
@@ -189,7 +189,7 @@ class CorpusClient
      * );
      * ```
      *
-     * @param string $model The model type (e.g., 'source')
+     * @param string $model Listing model. One of collection, contributor, organization, or source.
      * @param string $id The ID of the corpus item
      * @param ImpressionRequest $request
      * @param ?array{
@@ -251,7 +251,7 @@ class CorpusClient
      * );
      * ```
      *
-     * @param string $model The model type (e.g., 'source')
+     * @param string $model Listing model. One of collection, contributor, organization, or source.
      * @param string $id The numeric ID of the corpus item
      * @param LogCorpusReferralRedirectRequest $request
      * @param ?array{
@@ -321,7 +321,7 @@ class CorpusClient
      * );
      * ```
      *
-     * @param string $model The model type (e.g., 'source')
+     * @param string $model Listing model. One of collection, contributor, organization, or source.
      * @param string $id The ID of the corpus item
      * @param ReferralRequest $request
      * @param ?array{

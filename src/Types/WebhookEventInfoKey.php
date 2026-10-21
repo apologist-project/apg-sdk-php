@@ -7,6 +7,7 @@ enum WebhookEventInfoKey: string
     case PromptSubmit = "prompt_submit";
     case ResponseStart = "response_start";
     case ResponseEnd = "response_end";
+    case AutomationTrigger = "automation_trigger";
     case AutomationsEnd = "automations_end";
     case ResponseLike = "response_like";
     case ResponseFlag = "response_flag";

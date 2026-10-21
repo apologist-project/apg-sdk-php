@@ -23,6 +23,12 @@ class UserFlag extends JsonSerializableType
     public ?string $name;
 
     /**
+     * @var ?string $key Optional channel user-attribute key. When null, Agent derives a lowercase snake_case key from name.
+     */
+    #[JsonProperty('key')]
+    public ?string $key;
+
+    /**
      * @var ?int $userId Upstream owning user id when present (mirrored from Ignite).
      */
     #[JsonProperty('user_id')]
@@ -44,6 +50,7 @@ class UserFlag extends JsonSerializableType
      * @param array{
      *   id?: ?int,
      *   name?: ?string,
+     *   key?: ?string,
      *   userId?: ?int,
      *   teamId?: ?int,
      *   syncedAt?: ?string,
@@ -54,6 +61,7 @@ class UserFlag extends JsonSerializableType
     ) {
         $this->id = $values['id'] ?? null;
         $this->name = $values['name'] ?? null;
+        $this->key = $values['key'] ?? null;
         $this->userId = $values['userId'] ?? null;
         $this->teamId = $values['teamId'] ?? null;
         $this->syncedAt = $values['syncedAt'] ?? null;
