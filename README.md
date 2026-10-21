@@ -51,14 +51,15 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Apologist\AgentClient;
+use Apologist\Chat\Requests\ChatCompletionRequest;
 
 $client = new AgentClient(
     apiKey: '<value>',
 );
 $client->chat->createChatCompletion(
-    [
-        'key' => "value",
-    ],
+    new ChatCompletionRequest([
+        'traceparent' => '00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01',
+    ]),
 );
 
 ```

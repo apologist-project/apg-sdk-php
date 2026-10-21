@@ -28,7 +28,9 @@ Returns a paginated list of chat completions (prompts) for the agent, with appli
 
 ```php
 $client->chat->listChatCompletions(
-    new ListChatCompletionsRequest([]),
+    new ListChatCompletionsRequest([
+        'traceparent' => '00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01',
+    ]),
 );
 ```
 </dd>
@@ -184,6 +186,30 @@ $client->chat->listChatCompletions(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**$traceparent:** `?string` — W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tracestate:** `?string` — Optional W3C tracestate associated with traceparent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$baggage:** `?string` — Optional W3C baggage. Prompt text is never copied onto spans.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -220,9 +246,9 @@ Creates a chat completion using the agent's configured model. Supports both stre
 
 ```php
 $client->chat->createChatCompletion(
-    [
-        'key' => "value",
-    ],
+    new ChatCompletionRequest([
+        'traceparent' => '00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01',
+    ]),
 );
 ```
 </dd>
@@ -238,7 +264,263 @@ $client->chat->createChatCompletion(
 <dl>
 <dd>
 
-**$request:** `mixed` 
+**$traceparent:** `?string` — W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tracestate:** `?string` — Optional W3C tracestate associated with traceparent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$baggage:** `?string` — Optional W3C baggage. Prompt text is never copied onto spans.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$audio:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$frequencyPenalty:** `?float` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$logitBias:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$logprobs:** `bool|int|null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$topLogprobs:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$maxCompletionTokens:** `?int` — Output-token cap for this request. An API key may set this above the agent's Max Output Tokens. The value cannot exceed the model's maximum. Requests without an API key keep the agent's Max Output Tokens.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$maxTokens:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$messages:** `?array` — Chat messages in OpenAI format. Required when `prompt` is omitted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$metadata:** `?ChatCompletionRequestMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$modalities:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$model:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$n:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$parallelToolCalls:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$prediction:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$presencePenalty:** `?float` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$prompt:** `?string` — User text to complete. Required when `messages` is omitted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$reasoningEffort:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$verbosity:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$responseFormat:** `?ChatCompletionRequestResponseFormat` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$seed:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$serviceTier:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$stop:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$store:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$stream:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$streamOptions:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$temperature:** `?float` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$topP:** `?float` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tools:** `?array` — OpenAI-compatible function tool definitions. Passed through to the model as declaration-only tools (the client executes them and returns role=tool messages).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$toolChoice:** `string|array|null` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$user:** `?string` 
     
 </dd>
 </dl>
@@ -532,6 +814,118 @@ $client->chat->shareCompletion(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;chat-&gt;scrubCompletion($id) -> ?ScrubCompletionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->chat->scrubCompletion(
+    'id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` — The numeric id or UUID of the chat completion
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;chat-&gt;anonymizeCompletion($id) -> ?AnonymizeCompletionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->chat->anonymizeCompletion(
+    'id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$id:** `string` — The numeric id or UUID of the chat completion
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;chat-&gt;getChatCompletion($id) -> ?GetChatCompletionResponse</code></summary>
 <dl>
 <dd>
@@ -719,7 +1113,7 @@ $client->corpus->logCorpusView(
 <dl>
 <dd>
 
-**$model:** `string` — The model type (e.g., 'source')
+**$model:** `string` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -803,7 +1197,7 @@ $client->corpus->logCorpusImpression(
 <dl>
 <dd>
 
-**$model:** `string` — The model type (e.g., 'source')
+**$model:** `string` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -887,7 +1281,7 @@ $client->corpus->logCorpusReferralRedirect(
 <dl>
 <dd>
 
-**$model:** `string` — The model type (e.g., 'source')
+**$model:** `string` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -979,7 +1373,7 @@ $client->corpus->logCorpusReferral(
 <dl>
 <dd>
 
-**$model:** `string` — The model type (e.g., 'source')
+**$model:** `string` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -1240,7 +1634,7 @@ $client->evaluators->evaluateContent(
 <dl>
 <dd>
 
-**$content:** `string|array` 
+**$content:** `string|array` — Text to evaluate, an array of strings, or chat messages.
     
 </dd>
 </dl>
@@ -1402,9 +1796,7 @@ Finds matching CTAs based on conversation context, user, session, device, or mes
 
 ```php
 $client->ctAs->matchCtas(
-    [
-        'key' => "value",
-    ],
+    new CtaMatchRequest([]),
 );
 ```
 </dd>
@@ -1420,7 +1812,71 @@ $client->ctAs->matchCtas(
 <dl>
 <dd>
 
-**$request:** `mixed` 
+**$conversation:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$client:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$device:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$language:** `?string` — ISO language code, or `auto` to detect from the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$limit:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$messages:** `?array` — Chat messages in OpenAI format.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$session:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$user:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$variables:** `?array` — Flat string key/value pairs substituted into `{key}` placeholders in evaluator prompts run during CTA matching. Not persisted.
     
 </dd>
 </dl>
@@ -2075,7 +2531,7 @@ $client->benchmarks->listBenchmarkRuns(
 <dl>
 <dd>
 
-Executes a benchmark run and returns the aggregated result with nested evaluators, questions, and a flat evaluations array.
+Executes a benchmark run and returns the aggregated result with nested evaluators, questions, and a flat evaluations array. A run that cannot finish inside one request returns 202 with `completed_at` null and continues in the background. Poll Get a benchmark run until `completed_at` is set.
 </dd>
 </dl>
 </dd>
@@ -2666,7 +3122,7 @@ $client->channels->getChatwootChannelStatus(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;channels-&gt;receiveChatwootWebhook($id, $request)</code></summary>
+<details><summary><code>$client-&gt;channels-&gt;receiveChatwootWebhook($channelId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -2694,11 +3150,37 @@ Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the me
 
 ```php
 $client->channels->receiveChatwootWebhook(
-    'id',
-    new ReceiveChatwootWebhookRequest([
-        'body' => [
-            'key' => "value",
-        ],
+    '91',
+    new ChatwootWebhookPayload([
+        'chatwootSignature' => 'sha256=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
+        'chatwootTimestamp' => '1710000000',
+        'event' => 'message_created',
+        'id' => 9001,
+        'content' => 'Hello from Messenger',
+        'messageType' => 'incoming',
+        'private' => false,
+        'account' => new ChatwootWebhookPayloadAccount([
+            'id' => 7,
+        ]),
+        'sender' => new ChatwootWebhookPayloadSender([
+            'id' => 55,
+            'name' => 'Pat',
+            'type' => 'contact',
+        ]),
+        'conversation' => new ChatwootWebhookPayloadConversation([
+            'id' => 42,
+            'status' => 'pending',
+            'account' => new ChatwootWebhookPayloadConversationAccount([
+                'id' => 7,
+            ]),
+            'meta' => new ChatwootConversationMeta([
+                'assigneeType' => 'AgentBot',
+                'sender' => new ChatwootConversationMetaSender([
+                    'id' => 55,
+                    'name' => 'Pat',
+                ]),
+            ]),
+        ]),
     ]),
 );
 ```
@@ -2715,7 +3197,7 @@ $client->channels->receiveChatwootWebhook(
 <dl>
 <dd>
 
-**$id:** `string` — The channel id
+**$channelId:** `string` — The channel id
     
 </dd>
 </dl>
@@ -2739,7 +3221,79 @@ $client->channels->receiveChatwootWebhook(
 <dl>
 <dd>
 
-**$request:** `array` — Chatwoot Agent Bot webhook payload (`event` plus message or conversation fields).
+**$event:** `?string` — Chatwoot event name. Incoming visitor messages use `message_created`. Staff takeover and assignment use conversation events such as `conversation_opened`, `conversation_status_changed`, and `conversation_updated`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$id:** `?int` — Message id on `message_*` events. Conversation display id on `conversation_*` events.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$content:** `?string` — Message text. Present on message events. Empty or private notes are ignored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$messageType:** `?string` — Incoming visitor messages are `incoming` (or `0`). Staff replies are `outgoing` (or `1`).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$private_:** `?bool` — When true, the Agent ignores the message (Chatwoot private note).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$account:** `?ChatwootWebhookPayloadAccount` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sender:** `?ChatwootWebhookPayloadSender` — Present on message events.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$conversation:** `?ChatwootWebhookPayloadConversation` — Nested on message events. Conversation events send `id`, `status`, and `meta` at the top level instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$status:** `?string` — Top-level conversation status on conversation events.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$meta:** `?ChatwootConversationMeta` — Top-level conversation meta on conversation events.
     
 </dd>
 </dl>
@@ -3390,7 +3944,7 @@ $client->channels->receiveTwilioMessage(
 <dl>
 <dd>
 
-Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+Handles the Meta WhatsApp Cloud API webhook verification handshake. Requires an `api_key` query parameter or `x-api-key` header, then echoes `hub.challenge` when `hub.verify_token` matches the channel's configured token.
 </dd>
 </dl>
 </dd>
@@ -3474,7 +4028,7 @@ $client->channels->verifyWhatsAppWebhook(
 <dl>
 <dd>
 
-Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. An `api_key` query parameter or `x-api-key` header is required. Signature verification via `x-hub-signature-256` is also required when the channel has an App Secret configured.
 </dd>
 </dl>
 </dd>
@@ -3519,7 +4073,7 @@ $client->channels->receiveWhatsAppMessage(
 <dl>
 <dd>
 
-**$hubSignature256:** `?string` — Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+**$hubSignature256:** `?string` — Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured.
     
 </dd>
 </dl>

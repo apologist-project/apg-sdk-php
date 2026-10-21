@@ -1,6 +1,6 @@
 <?php
 
-namespace Apologist\Types;
+namespace Apologist\Chat\Types;
 
 use Apologist\Core\Json\JsonSerializableType;
 use Apologist\Core\Json\JsonProperty;
@@ -22,7 +22,7 @@ class ChatCompletionRequestMetadata extends JsonSerializableType
     public ?string $conversation;
 
     /**
-     * @var ?string $language
+     * @var ?string $language ISO language code for this turn, or `auto` to detect from the prompt.
      */
     #[JsonProperty('language')]
     public ?string $language;

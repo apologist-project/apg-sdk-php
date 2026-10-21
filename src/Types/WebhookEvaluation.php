@@ -6,7 +6,7 @@ use Apologist\Core\Json\JsonSerializableType;
 use Apologist\Core\Json\JsonProperty;
 
 /**
- * Result of an evaluation run for CTA/guardrail events.
+ * Result of an evaluation run for CTA, guardrail, or automation events.
  */
 class WebhookEvaluation extends JsonSerializableType
 {

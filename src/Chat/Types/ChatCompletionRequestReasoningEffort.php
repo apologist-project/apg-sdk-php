@@ -1,6 +1,6 @@
 <?php
 
-namespace Apologist\Types;
+namespace Apologist\Chat\Types;
 
 enum ChatCompletionRequestReasoningEffort: string
 {

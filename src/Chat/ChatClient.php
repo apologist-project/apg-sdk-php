@@ -13,12 +13,15 @@ use Apologist\Environments;
 use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Apologist\Chat\Requests\ChatCompletionRequest;
 use Apologist\Types\ChatCompletionResponse;
 use Apologist\Chat\Requests\LikeRequest;
 use Apologist\Types\SuccessResponse;
 use Apologist\Chat\Requests\FlagRequest;
 use Apologist\Chat\Requests\FeedbackRequest;
 use Apologist\Chat\Requests\ShareRequest;
+use Apologist\Chat\Types\ScrubCompletionResponse;
+use Apologist\Chat\Types\AnonymizeCompletionResponse;
 use Apologist\Chat\Types\GetChatCompletionResponse;
 
 class ChatClient
@@ -63,7 +66,9 @@ class ChatClient
      * Example:
      * ```php
      * $client->chat->listChatCompletions(
-     *     new ListChatCompletionsRequest([]),
+     *     new ListChatCompletionsRequest([
+     *         'traceparent' => '00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01',
+     *     ]),
      * );
      * ```
      *
@@ -138,12 +143,23 @@ class ChatClient
         if ($request->maxTimestamp != null) {
             $query['max_timestamp'] = $request->maxTimestamp;
         }
+        $headers = [];
+        if ($request->traceparent != null) {
+            $headers['traceparent'] = $request->traceparent;
+        }
+        if ($request->tracestate != null) {
+            $headers['tracestate'] = $request->tracestate;
+        }
+        if ($request->baggage != null) {
+            $headers['baggage'] = $request->baggage;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "chat/completions",
                     method: HttpMethod::GET,
+                    headers: $headers,
                     query: $query,
                 ),
                 $options,
@@ -174,15 +190,13 @@ class ChatClient
      * Example:
      * ```php
      * $client->chat->createChatCompletion(
-     *     [
-     *         'key' => "value",
-     *     ],
+     *     new ChatCompletionRequest([
+     *         'traceparent' => '00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01',
+     *     ]),
      * );
      * ```
      *
-     * @param (
-     *    mixed
-     * ) $request
+     * @param ChatCompletionRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -195,15 +209,26 @@ class ChatClient
      * @throws ApologistAiException
      * @throws ApologistAiApiException
      */
-    public function createChatCompletion(mixed $request, ?array $options = null): ?ChatCompletionResponse
+    public function createChatCompletion(ChatCompletionRequest $request = new ChatCompletionRequest(), ?array $options = null): ?ChatCompletionResponse
     {
         $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->traceparent != null) {
+            $headers['traceparent'] = $request->traceparent;
+        }
+        if ($request->tracestate != null) {
+            $headers['tracestate'] = $request->tracestate;
+        }
+        if ($request->baggage != null) {
+            $headers['baggage'] = $request->baggage;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
                     path: "chat/completions",
                     method: HttpMethod::POST,
+                    headers: $headers,
                     body: $request,
                 ),
                 $options,
@@ -453,6 +478,116 @@ class ChatClient
                     return null;
                 }
                 return SuccessResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+     *
+     * Example:
+     * ```php
+     * $client->chat->scrubCompletion(
+     *     'id',
+     * );
+     * ```
+     *
+     * @param string $id The numeric id or UUID of the chat completion
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ScrubCompletionResponse
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function scrubCompletion(string $id, ?array $options = null): ?ScrubCompletionResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "chat/completions/{$id}/scrub",
+                    method: HttpMethod::POST,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ScrubCompletionResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new ApologistAiException(message: $e->getMessage(), previous: $e);
+        }
+        throw new ApologistAiApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+     *
+     * Example:
+     * ```php
+     * $client->chat->anonymizeCompletion(
+     *     'id',
+     * );
+     * ```
+     *
+     * @param string $id The numeric id or UUID of the chat completion
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?AnonymizeCompletionResponse
+     * @throws ApologistAiException
+     * @throws ApologistAiApiException
+     */
+    public function anonymizeCompletion(string $id, ?array $options = null): ?AnonymizeCompletionResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    path: "chat/completions/{$id}/anonymize",
+                    method: HttpMethod::POST,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return AnonymizeCompletionResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new ApologistAiException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
