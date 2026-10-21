@@ -97,6 +97,21 @@ class ListChatCompletionsRequest extends JsonSerializableType
     public ?string $maxTimestamp;
 
     /**
+     * @var ?string $traceparent W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+     */
+    public ?string $traceparent;
+
+    /**
+     * @var ?string $tracestate Optional W3C tracestate associated with traceparent.
+     */
+    public ?string $tracestate;
+
+    /**
+     * @var ?string $baggage Optional W3C baggage. Prompt text is never copied onto spans.
+     */
+    public ?string $baggage;
+
+    /**
      * @param array{
      *   page?: ?int,
      *   perPage?: ?int,
@@ -116,6 +131,9 @@ class ListChatCompletionsRequest extends JsonSerializableType
      *   userId?: ?string,
      *   minTimestamp?: ?string,
      *   maxTimestamp?: ?string,
+     *   traceparent?: ?string,
+     *   tracestate?: ?string,
+     *   baggage?: ?string,
      * } $values
      */
     public function __construct(
@@ -139,5 +157,8 @@ class ListChatCompletionsRequest extends JsonSerializableType
         $this->userId = $values['userId'] ?? null;
         $this->minTimestamp = $values['minTimestamp'] ?? null;
         $this->maxTimestamp = $values['maxTimestamp'] ?? null;
+        $this->traceparent = $values['traceparent'] ?? null;
+        $this->tracestate = $values['tracestate'] ?? null;
+        $this->baggage = $values['baggage'] ?? null;
     }
 }

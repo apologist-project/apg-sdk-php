@@ -3,6 +3,7 @@
 namespace Apologist\Benchmarks\Requests;
 
 use Apologist\Core\Json\JsonSerializableType;
+use Apologist\Types\ChatMessage;
 use Apologist\Core\Json\JsonProperty;
 use Apologist\Core\Types\Union;
 use Apologist\Benchmarks\Types\BenchmarkRunRequestReasoningEffort;
@@ -13,11 +14,14 @@ class BenchmarkRunRequest extends JsonSerializableType
     /**
      * @var (
      *    string
-     *   |array<mixed>
+     *   |array<(
+     *    string
+     *   |ChatMessage
+     * )>
      *   |null
      * ) $content Content to evaluate. Required when `source_id` is supplied.
      */
-    #[JsonProperty('content'), Union(new Union('string', 'null'), new Union(['mixed'], 'null'), 'null')]
+    #[JsonProperty('content'), Union(new Union('string', 'null'), new Union([new Union('string', ChatMessage::class)], 'null'), 'null')]
     public string|array|null $content;
 
     /**
@@ -102,7 +106,10 @@ class BenchmarkRunRequest extends JsonSerializableType
      * @param array{
      *   content?: (
      *    string
-     *   |array<mixed>
+     *   |array<(
+     *    string
+     *   |ChatMessage
+     * )>
      *   |null
      * ),
      *   completionId?: ?string,

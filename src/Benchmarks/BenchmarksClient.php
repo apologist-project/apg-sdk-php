@@ -146,7 +146,7 @@ class BenchmarksClient
     }
 
     /**
-     * Executes a benchmark run and returns the aggregated result with nested evaluators, questions, and a flat evaluations array.
+     * Executes a benchmark run and returns the aggregated result with nested evaluators, questions, and a flat evaluations array. A run that cannot finish inside one request returns 202 with `completed_at` null and continues in the background. Poll Get a benchmark run until `completed_at` is set.
      *
      * Example:
      * ```php

@@ -12,7 +12,7 @@ use Apologist\Environments;
 use Apologist\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Apologist\Channels\Requests\ReceiveChatwootWebhookRequest;
+use Apologist\Channels\Requests\ChatwootWebhookPayload;
 use Apologist\Channels\Types\GetDiscordChannelStatusResponse;
 use Apologist\Channels\Requests\ReceiveDiscordInteractionRequest;
 use Apologist\Channels\Types\GetLineChannelStatusResponse;
@@ -122,17 +122,43 @@ class ChannelsClient
      * Example:
      * ```php
      * $client->channels->receiveChatwootWebhook(
-     *     'id',
-     *     new ReceiveChatwootWebhookRequest([
-     *         'body' => [
-     *             'key' => "value",
-     *         ],
+     *     '91',
+     *     new ChatwootWebhookPayload([
+     *         'chatwootSignature' => 'sha256=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
+     *         'chatwootTimestamp' => '1710000000',
+     *         'event' => 'message_created',
+     *         'id' => 9001,
+     *         'content' => 'Hello from Messenger',
+     *         'messageType' => 'incoming',
+     *         'private' => false,
+     *         'account' => new ChatwootWebhookPayloadAccount([
+     *             'id' => 7,
+     *         ]),
+     *         'sender' => new ChatwootWebhookPayloadSender([
+     *             'id' => 55,
+     *             'name' => 'Pat',
+     *             'type' => 'contact',
+     *         ]),
+     *         'conversation' => new ChatwootWebhookPayloadConversation([
+     *             'id' => 42,
+     *             'status' => 'pending',
+     *             'account' => new ChatwootWebhookPayloadConversationAccount([
+     *                 'id' => 7,
+     *             ]),
+     *             'meta' => new ChatwootConversationMeta([
+     *                 'assigneeType' => 'AgentBot',
+     *                 'sender' => new ChatwootConversationMetaSender([
+     *                     'id' => 55,
+     *                     'name' => 'Pat',
+     *                 ]),
+     *             ]),
+     *         ]),
      *     ]),
      * );
      * ```
      *
-     * @param string $id The channel id
-     * @param ReceiveChatwootWebhookRequest $request
+     * @param string $channelId The channel id
+     * @param ChatwootWebhookPayload $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -144,7 +170,7 @@ class ChannelsClient
      * @throws ApologistAiException
      * @throws ApologistAiApiException
      */
-    public function receiveChatwootWebhook(string $id, ReceiveChatwootWebhookRequest $request, ?array $options = null): void
+    public function receiveChatwootWebhook(string $channelId, ChatwootWebhookPayload $request = new ChatwootWebhookPayload(), ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -158,10 +184,10 @@ class ChannelsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "channels/{$id}/chatwoot",
+                    path: "channels/{$channelId}/chatwoot",
                     method: HttpMethod::POST,
                     headers: $headers,
-                    body: $request->body,
+                    body: $request,
                 ),
                 $options,
             );
@@ -682,7 +708,7 @@ class ChannelsClient
     }
 
     /**
-     * Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+     * Handles the Meta WhatsApp Cloud API webhook verification handshake. Requires an `api_key` query parameter or `x-api-key` header, then echoes `hub.challenge` when `hub.verify_token` matches the channel's configured token.
      *
      * Example:
      * ```php
@@ -743,7 +769,7 @@ class ChannelsClient
     }
 
     /**
-     * Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+     * Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. An `api_key` query parameter or `x-api-key` header is required. Signature verification via `x-hub-signature-256` is also required when the channel has an App Secret configured.
      *
      * Example:
      * ```php

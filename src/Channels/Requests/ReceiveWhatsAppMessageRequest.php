@@ -7,7 +7,7 @@ use Apologist\Core\Json\JsonSerializableType;
 class ReceiveWhatsAppMessageRequest extends JsonSerializableType
 {
     /**
-     * @var ?string $hubSignature256 Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+     * @var ?string $hubSignature256 Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured.
      */
     public ?string $hubSignature256;
 
